@@ -12,12 +12,12 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ sale, onClose }) => 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
       <div 
-        className="w-full max-w-sm bg-[#0d0e12] border border-[#232732] rounded-2xl p-6 shadow-2xl relative text-zinc-100 font-mono text-xs"
+        className="w-full max-w-sm bg-zinc-950 border border-zinc-800 rounded-2xl p-6 shadow-2xl relative text-zinc-100 font-mono text-xs"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Cupom */}
-        <div className="text-center pb-4 border-b border-dashed border-[#2d3240]">
-          <div className="w-9 h-9 mx-auto rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm mb-2">
+        <div className="text-center pb-4 border-b border-dashed border-zinc-800">
+          <div className="w-9 h-9 mx-auto rounded-lg bg-zinc-900 border border-zinc-700 text-zinc-100 flex items-center justify-center font-bold text-sm mb-2">
             ✓
           </div>
           <h4 className="font-bold text-sm text-zinc-100 tracking-wider">WLC SYSTEM 1.1.0</h4>
@@ -32,7 +32,7 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ sale, onClose }) => 
         </div>
 
         {/* Itens */}
-        <div className="py-4 border-b border-dashed border-[#2d3240] space-y-2 max-h-56 overflow-y-auto">
+        <div className="py-4 border-b border-dashed border-zinc-800 space-y-2 max-h-56 overflow-y-auto">
           <div className="grid grid-cols-12 text-[10px] text-zinc-400 font-semibold uppercase">
             <span className="col-span-6">Item</span>
             <span className="col-span-2 text-center">Qtd</span>
@@ -50,24 +50,24 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ sale, onClose }) => 
         </div>
 
         {/* Totais */}
-        <div className="py-3 border-b border-dashed border-[#2d3240] space-y-1.5 text-xs">
+        <div className="py-3 border-b border-dashed border-zinc-800 space-y-1.5 text-xs">
           <div className="flex justify-between text-zinc-400">
             <span>Subtotal</span>
             <span>R$ {sale.subtotal.toFixed(2)}</span>
           </div>
           {sale.discount > 0 && (
-            <div className="flex justify-between text-emerald-400">
+            <div className="flex justify-between text-zinc-300">
               <span>Desconto</span>
               <span>- R$ {sale.discount.toFixed(2)}</span>
             </div>
           )}
           <div className="flex justify-between font-bold text-sm text-zinc-100 pt-1">
             <span>VALOR TOTAL</span>
-            <span className="text-emerald-400">R$ {sale.total.toFixed(2)}</span>
+            <span className="text-white">R$ {sale.total.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-[11px] text-zinc-400 pt-1">
             <span>Forma Pagamento</span>
-            <span className="uppercase text-amber-400 font-semibold">{sale.paymentMethod}</span>
+            <span className="uppercase text-zinc-200 font-semibold">{sale.paymentMethod}</span>
           </div>
           {sale.cashReceived && (
             <>
@@ -75,7 +75,7 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ sale, onClose }) => 
                 <span>Valor Recebido</span>
                 <span>R$ {sale.cashReceived.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-[11px] text-emerald-300 font-bold">
+              <div className="flex justify-between text-[11px] text-zinc-200 font-bold">
                 <span>Troco Devolvido</span>
                 <span>R$ {(sale.changeGiven || 0).toFixed(2)}</span>
               </div>
@@ -94,7 +94,7 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ sale, onClose }) => 
             </div>
           </div>
           <p className="text-[9px] text-zinc-400 mt-2">
-            Consulte pela chave de acesso via Lovable Cloud DB
+            Consulte pela chave de acesso via Supabase
           </p>
         </div>
 
@@ -102,13 +102,13 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ sale, onClose }) => 
         <div className="mt-5 flex gap-2">
           <button
             onClick={() => window.print()}
-            className="flex-1 py-2 px-3 rounded-xl bg-[#171a22] hover:bg-[#202532] border border-[#2d3240] text-zinc-200 text-xs font-semibold transition-colors"
+            className="flex-1 py-2 px-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 text-xs font-semibold transition-colors"
           >
             🖨 Imprimir
           </button>
           <button
             onClick={onClose}
-            className="flex-1 py-2 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold transition-colors"
+            className="flex-1 py-2 px-3 rounded-xl bg-white hover:bg-zinc-200 text-zinc-950 text-xs font-bold transition-colors"
           >
             Concluir
           </button>

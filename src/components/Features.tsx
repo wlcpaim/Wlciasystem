@@ -6,37 +6,31 @@ export const Features: React.FC = () => {
       title: "Autonomia Determinística",
       desc: "Sem alucinações. O motor WLC 1.1.0 opera comandos cirúrgicos de terminal com verificação de integridade antes de qualquer persistência.",
       badge: "WLC Core",
-      color: "emerald",
     },
     {
       title: "Sincronização Bi-direcional CMD",
       desc: "O terminal de desenvolvimento e a IA compartilham o mesmo canal de eventos em tempo real, permitindo orquestração colaborativa instantânea.",
       badge: "Bridge 2.0",
-      color: "cyan",
     },
     {
       title: "Diagnóstico Estático em Tempo Real",
       desc: "O comando diagnose examina sintaxe, dependências e imports cruzados de todos os arquivos do projeto em milissegundos.",
       badge: "AST Analyzer",
-      color: "teal",
     },
     {
       title: "Pipeline de Commit Assinado",
       desc: "Gravação e assinatura direta no GitHub oficial da sua organização com diff unificado e controle por branch configurável.",
       badge: "GitHub Actions",
-      color: "emerald",
     },
     {
       title: "Calculadora de ROI Embutida",
       desc: "Simule e apresente aos stakeholders o retorno financeiro exato de cada sprint antes de iniciar a produção de software.",
       badge: "Enterprise Metrics",
-      color: "cyan",
     },
     {
       title: "Proteção de Nível Owner",
       desc: "Autenticação por token do usuário e isolamento seguro de credenciais: nenhuma chave de integração jamais vaza na resposta.",
       badge: "Security Standard",
-      color: "teal",
     },
   ];
 
@@ -45,13 +39,13 @@ export const Features: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono mb-4">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-300 text-xs font-mono mb-4">
             <span>ARQUITETURA DE ENGENHARIA</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
             Construído para Engenheiros que Exigem Confiabilidade
           </h2>
-          <p className="text-base text-slate-400">
+          <p className="text-base text-zinc-400">
             Diferente de assistentes convencionais, o WLC 1.1.0 executa comandos determinísticos de terminal que respeitam o ciclo de vida do software.
           </p>
         </div>
@@ -61,15 +55,15 @@ export const Features: React.FC = () => {
             <div key={idx} className="p-8 rounded-2xl glass-card-interactive flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-[11px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-800/80 border border-slate-700/80 text-emerald-400">
+                  <span className="text-[11px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-full bg-zinc-800/80 border border-zinc-700/80 text-zinc-200">
                     {item.badge}
                   </span>
-                  <span className="text-xs font-mono text-slate-600">0{idx + 1}</span>
+                  <span className="text-xs font-mono text-zinc-500">0{idx + 1}</span>
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
-                <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
+                <p className="text-sm text-zinc-400 leading-relaxed">{item.desc}</p>
               </div>
-              <div className="mt-6 pt-4 border-t border-slate-800/60 flex items-center text-xs font-medium text-emerald-400 space-x-1">
+              <div className="mt-6 pt-4 border-t border-zinc-800 flex items-center text-xs font-medium text-zinc-300 space-x-1">
                 <span>Ver especificação</span>
                 <span className="font-mono">→</span>
               </div>

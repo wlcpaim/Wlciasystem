@@ -95,7 +95,7 @@ export const DatabaseConfigModal: React.FC<DatabaseConfigModalProps> = ({
               <h3 className="font-medium text-zinc-100 text-sm tracking-tight flex items-center gap-2">
                 Configuração do Banco & Auth
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-zinc-900 border border-zinc-700 text-zinc-300 flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  <span className={"w-1.5 h-1.5 rounded-full " + (config.status === "connected" ? "bg-white" : "bg-zinc-600")} />
                   {config.status === "connected" ? "Conectado" : "Offline"}
                 </span>
               </h3>

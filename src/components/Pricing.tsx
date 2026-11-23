@@ -56,37 +56,33 @@ export const Pricing: React.FC = () => {
   ];
 
   return (
-    <section id="planos" className="py-24 relative overflow-hidden bg-slate-950/40">
+    <section id="planos" className="py-24 relative overflow-hidden bg-zinc-950/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono mb-4">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-300 text-xs font-mono mb-4">
             <span>PLANOS TRANSPARENTES</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
             Invista na Produtividade do seu Time
           </h2>
-          <p className="text-base text-slate-400 mb-8">
+          <p className="text-base text-zinc-400 mb-8">
             Escolha o plano ideal para a dimensão do seu squad de tecnologia. Todos incluem o motor WLC System.
           </p>
 
-          <div className="inline-flex items-center p-1 rounded-xl bg-slate-900 border border-slate-800 text-xs font-semibold">
+          <div className="inline-flex items-center p-1 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-semibold">
             <button
               onClick={() => setAnnual(false)}
-              className={`px-4 py-2 rounded-lg transition-all ${
-                !annual ? "bg-slate-800 text-white shadow" : "text-slate-400 hover:text-white"
-              }`}
+              className={}
             >
               Faturamento Mensal
             </button>
             <button
               onClick={() => setAnnual(true)}
-              className={`px-4 py-2 rounded-lg transition-all flex items-center space-x-1.5 ${
-                annual ? "bg-emerald-500 text-slate-950 shadow-md font-bold" : "text-slate-400 hover:text-white"
-              }`}
+              className={}
             >
               <span>Faturamento Anual</span>
-              <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-slate-950/20">
+              <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-zinc-200 text-zinc-900 font-bold">
                 -20% OFF
               </span>
             </button>
@@ -99,34 +95,30 @@ export const Pricing: React.FC = () => {
             return (
               <div
                 key={p.id}
-                className={`p-8 rounded-2xl flex flex-col justify-between relative transition-all ${
-                  p.popular
-                    ? "glass-glow-emerald border-emerald-500/40 -translate-y-2"
-                    : "glass-card-interactive"
-                }`}
+                className={}
               >
                 {p.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 text-[10px] font-extrabold uppercase tracking-widest shadow-md">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-white text-zinc-950 text-[10px] font-extrabold uppercase tracking-widest shadow-md">
                     {p.badge}
                   </div>
                 )}
 
                 <div>
                   <div className="text-xl font-bold text-white mb-1">{p.name}</div>
-                  <p className="text-xs text-slate-400 mb-6 min-h-[36px]">{p.description}</p>
+                  <p className="text-xs text-zinc-400 mb-6 min-h-[36px]">{p.description}</p>
 
-                  <div className="mb-6 pb-6 border-b border-slate-800/80">
+                  <div className="mb-6 pb-6 border-b border-zinc-800">
                     <span className="text-4xl font-extrabold font-mono text-white">R$ {price}</span>
-                    <span className="text-xs text-slate-400 ml-1.5 font-mono">/ mês</span>
+                    <span className="text-xs text-zinc-400 ml-1.5 font-mono">/ mês</span>
                     {annual && (
-                      <div className="text-[11px] text-emerald-400 font-mono mt-1">Cobrado anualmente</div>
+                      <div className="text-[11px] text-zinc-300 font-mono mt-1">Cobrado anualmente</div>
                     )}
                   </div>
 
-                  <ul className="space-y-3 mb-8 text-xs text-slate-300">
+                  <ul className="space-y-3 mb-8 text-xs text-zinc-300">
                     {p.features.map((f, i) => (
                       <li key={i} className="flex items-start space-x-2.5">
-                        <svg className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="w-4 h-4 text-zinc-300 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                         </svg>
                         <span>{f}</span>
@@ -136,11 +128,7 @@ export const Pricing: React.FC = () => {
                 </div>
 
                 <button
-                  className={`w-full py-3.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
-                    p.popular
-                      ? "bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-950 hover:from-emerald-300 hover:to-teal-300 shadow-lg shadow-emerald-500/25"
-                      : "bg-slate-800 hover:bg-slate-700 text-white"
-                  }`}
+                  className={}
                 >
                   {p.cta}
                 </button>

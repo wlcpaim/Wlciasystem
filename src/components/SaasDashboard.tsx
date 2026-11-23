@@ -1,3 +1,7 @@
+`src/components/SaasDashboard.tsx` · 295 linhas · modified
+```tsx
+`src/components/SaasDashboard.tsx` · 292 linhas · unchanged
+```tsx
 import React, { useState } from "react";
 import { SaasSubscription } from "../types/system";
 
@@ -85,7 +89,7 @@ export const SaasDashboard: React.FC = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#232732]">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-[11px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400">
+            <span className="text-[11px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-300">
               Módulo SaaS Enterprise
             </span>
             <span className="text-[11px] text-zinc-400 font-mono">Realtime Sync On</span>
@@ -102,7 +106,7 @@ export const SaasDashboard: React.FC = () => {
           <button className="py-2 px-3.5 rounded-xl bg-[#14161d] hover:bg-[#1a1e28] border border-[#262a36] text-xs font-medium text-zinc-200 transition-colors">
             📥 Exportar Relatório (CSV)
           </button>
-          <button className="py-2 px-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold text-xs tracking-wide shadow-md transition-all">
+          <button className="py-2 px-3.5 rounded-xl bg-white hover:bg-zinc-200 text-zinc-950 font-semibold text-xs tracking-wide shadow-md transition-all">
             + Nova Assinatura
           </button>
         </div>
@@ -118,7 +122,7 @@ export const SaasDashboard: React.FC = () => {
           <div className="text-2xl font-bold text-zinc-100 mt-2 font-mono">
             R$ {totalMrr.toLocaleString("pt-BR")},00
           </div>
-          <div className="flex items-center gap-1.5 mt-2 text-[11px] text-emerald-400 font-medium">
+          <div className="flex items-center gap-1.5 mt-2 text-[11px] text-zinc-300 font-medium">
             <span>↑ 18.4%</span>
             <span className="text-zinc-400">vs. mês anterior</span>
           </div>
@@ -129,10 +133,10 @@ export const SaasDashboard: React.FC = () => {
           <div className="text-[11px] font-mono uppercase tracking-wider text-zinc-400">
             ARR (Receita Anual Projetada)
           </div>
-          <div className="text-2xl font-bold text-amber-400 mt-2 font-mono">
+          <div className="text-2xl font-bold text-white mt-2 font-mono">
             R$ {(totalArr / 1000).toFixed(1)}k
           </div>
-          <div className="flex items-center gap-1.5 mt-2 text-[11px] text-emerald-400 font-medium">
+          <div className="flex items-center gap-1.5 mt-2 text-[11px] text-zinc-300 font-medium">
             <span>↑ 24.1%</span>
             <span className="text-zinc-400">crescimento acelerado</span>
           </div>
@@ -146,7 +150,7 @@ export const SaasDashboard: React.FC = () => {
           <div className="text-2xl font-bold text-zinc-100 mt-2 font-mono">
             842 <span className="text-xs font-normal text-zinc-400">empresas</span>
           </div>
-          <div className="flex items-center gap-1.5 mt-2 text-[11px] text-emerald-400 font-medium">
+          <div className="flex items-center gap-1.5 mt-2 text-[11px] text-zinc-300 font-medium">
             <span>99.2%</span>
             <span className="text-zinc-400">retenção líquida</span>
           </div>
@@ -157,7 +161,7 @@ export const SaasDashboard: React.FC = () => {
           <div className="text-[11px] font-mono uppercase tracking-wider text-zinc-400">
             Taxa de Churn
           </div>
-          <div className="text-2xl font-bold text-emerald-400 mt-2 font-mono">
+          <div className="text-2xl font-bold text-zinc-300 mt-2 font-mono">
             0.6%
           </div>
           <div className="flex items-center gap-1.5 mt-2 text-[11px] text-zinc-400">
@@ -173,7 +177,7 @@ export const SaasDashboard: React.FC = () => {
             <h3 className="font-semibold text-zinc-100 text-sm">Evolução de MRR nos Últimos 6 Meses</h3>
             <p className="text-[11px] text-zinc-400">Expansão de contas enterprise com zero churn involuntário</p>
           </div>
-          <span className="text-xs font-mono text-emerald-400 font-semibold bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-lg">
+          <span className="text-xs font-mono text-zinc-300 font-semibold bg-zinc-800 border border-zinc-700 px-2.5 py-1 rounded-lg">
             + R$ 24.300 no trimestre
           </span>
         </div>
@@ -194,7 +198,7 @@ export const SaasDashboard: React.FC = () => {
               <div className="w-full bg-[#181a22] rounded-t-lg overflow-hidden h-24 flex items-end">
                 <div 
                   className={`w-full rounded-t-lg transition-all duration-500 ${
-                    i === 5 ? "bg-gradient-to-t from-amber-600 to-amber-400" : "bg-[#272b38] group-hover:bg-[#343a4c]"
+                    i === 5 ? "bg-white" : "bg-zinc-800 group-hover:bg-zinc-700"
                   }`}
                   style={{ height: `${bar.val}%` }}
                 />
@@ -219,12 +223,12 @@ export const SaasDashboard: React.FC = () => {
               placeholder="Buscar cliente..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-[#14161d] border border-[#262a36] rounded-xl px-3 py-1.5 text-xs text-zinc-200 placeholder:text-zinc-500 focus:outline-none focus:border-amber-500 transition-colors"
+              className="bg-[#14161d] border border-[#262a36] rounded-xl px-3 py-1.5 text-xs text-zinc-200 placeholder:text-zinc-500 focus:outline-none focus:border-zinc-500 transition-colors"
             />
             <select
               value={filterPlan}
               onChange={(e) => setFilterPlan(e.target.value)}
-              className="bg-[#14161d] border border-[#262a36] rounded-xl px-3 py-1.5 text-xs text-zinc-200 focus:outline-none focus:border-amber-500 transition-colors"
+              className="bg-[#14161d] border border-[#262a36] rounded-xl px-3 py-1.5 text-xs text-zinc-200 focus:outline-none focus:border-zinc-500 transition-colors"
             >
               <option value="all">Todos os Planos</option>
               <option value="enterprise">Enterprise</option>
@@ -268,8 +272,8 @@ export const SaasDashboard: React.FC = () => {
                   <td className="py-3.5">
                     <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono border ${
                       sub.status === "active"
-                        ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
-                        : "bg-amber-500/10 border-amber-500/20 text-amber-400"
+                        ? "bg-zinc-800 border-zinc-700 text-zinc-100"
+                        : "bg-zinc-900 border-zinc-800 text-zinc-400"
                     }`}>
                       <span className="w-1 h-1 rounded-full bg-current" />
                       {sub.status === "active" ? "Ativo" : "Em Trial"}
@@ -277,7 +281,7 @@ export const SaasDashboard: React.FC = () => {
                   </td>
                   <td className="py-3.5 font-mono text-zinc-400">{sub.nextBillingDate}</td>
                   <td className="py-3.5 text-right">
-                    <button className="text-[11px] text-zinc-400 hover:text-amber-400 font-mono p-1 rounded hover:bg-[#1c202a] transition-colors">
+                    <button className="text-[11px] text-zinc-400 hover:text-white font-mono p-1 rounded hover:bg-[#1c202a] transition-colors">
                       Gerenciar ↗
                     </button>
                   </td>
@@ -290,3 +294,5 @@ export const SaasDashboard: React.FC = () => {
     </div>
   );
 };
+```
+```

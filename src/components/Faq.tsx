@@ -27,17 +27,17 @@ export const Faq: React.FC = () => {
   ];
 
   return (
-    <section id="faq" className="py-24 relative overflow-hidden bg-slate-950/60 border-t border-slate-900">
+    <section id="faq" className="py-24 relative overflow-hidden bg-zinc-950/60 border-t border-zinc-900">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center mb-16">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono mb-4">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-300 text-xs font-mono mb-4">
             <span>DÚVIDAS FREQUENTES</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
             Perguntas Frequentes de Segurança & Engenharia
           </h2>
-          <p className="text-base text-slate-400">
+          <p className="text-base text-zinc-400">
             Respostas transparentes sobre conformidade, arquitetura e garantias técnicas.
           </p>
         </div>
@@ -48,19 +48,19 @@ export const Faq: React.FC = () => {
             return (
               <div
                 key={idx}
-                className="rounded-2xl glass-panel border border-slate-800 overflow-hidden transition-all"
+                className="rounded-2xl glass-panel border border-zinc-800 overflow-hidden transition-all"
               >
                 <button
                   onClick={() => setOpenIdx(isOpen ? null : idx)}
-                  className="w-full p-6 text-left flex items-center justify-between text-base font-bold text-white hover:text-emerald-400 transition-colors"
+                  className="w-full p-6 text-left flex items-center justify-between text-base font-bold text-white hover:text-zinc-300 transition-colors"
                 >
                   <span>{item.q}</span>
-                  <span className="font-mono text-xl text-emerald-400 ml-4 shrink-0">
+                  <span className="font-mono text-xl text-zinc-400 ml-4 shrink-0">
                     {isOpen ? "−" : "+"}
                   </span>
                 </button>
                 {isOpen && (
-                  <div className="px-6 pb-6 text-sm text-slate-300 leading-relaxed border-t border-slate-800/60 pt-4">
+                  <div className="px-6 pb-6 text-sm text-zinc-300 leading-relaxed border-t border-zinc-800/60 pt-4">
                     {item.a}
                   </div>
                 )}

@@ -9,6 +9,9 @@ export function getStoredConfig(fallback: DatabaseConfig): DatabaseConfig {
     const raw = localStorage.getItem(STORAGE_CONFIG_KEY);
     if (!raw) return fallback;
     const parsed = JSON.parse(raw);
+    if (!parsed.endpoint || parsed.endpoint === '') {
+      return { ...fallback, ...parsed, endpoint: fallback.endpoint, anonKey: fallback.anonKey };
+    }
     return { ...fallback, ...parsed };
   } catch {
     return fallback;
@@ -146,7 +149,6 @@ export async function supabaseSignIn(
   const systemUser: SystemUser = {
     id: sbUser?.id || 'usr-' + Math.random().toString(36).substring(2, 9),
     name: userMetadata.name || (data.email.split('@')[0]) || 'Usuário WLC',
-    email: data.email,
     role: userMetadata.role || 'admin',
     lastLogin: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
   };

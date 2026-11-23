@@ -70,7 +70,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={onOpenDbConfig}
               className="py-1.5 px-2.5 rounded-lg bg-zinc-900 hover:bg-zinc-800/80 border border-zinc-800 flex items-center gap-2 text-xs text-zinc-300 transition-colors group"
             >
-              <span className={"w-1.5 h-1.5 rounded-full " + (dbConfig.status === "connected" ? "bg-emerald-400" : "bg-zinc-600")} />
+              <span className={"w-1.5 h-1.5 rounded-full " + (dbConfig.status === "connected" ? "bg-zinc-100" : "bg-zinc-600")} />
               <span className="font-mono text-zinc-400 text-[11px]">DB:</span>
               <span className="font-medium text-zinc-200 text-[11px]">
                 {dbConfig.endpoint ? "Supabase Conectado" : "Configurar Banco"}
@@ -162,7 +162,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   </div>
                   <button
                     onClick={() => { onLogout(); setMobileMenuOpen(false); }}
-                    className="text-xs text-red-400 hover:underline"
+                    className="text-xs text-zinc-400 hover:text-white hover:underline"
                   >
                     Sair
                   </button>

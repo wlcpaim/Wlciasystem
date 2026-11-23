@@ -114,9 +114,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         </div>
 
         {!hasConfig && (
-          <div className="mt-4 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs flex flex-col gap-1.5">
-            <div className="font-medium">Supabase não configurado</div>
-            <div className="text-[11px] text-amber-200/80">
+          <div className="mt-4 p-3 rounded-xl bg-zinc-900 border border-zinc-700 text-zinc-300 text-xs flex flex-col gap-1.5">
+            <div className="font-medium text-zinc-200">Supabase não configurado</div>
+            <div className="text-[11px] text-zinc-400">
               Insira a URL e a Chave Anon nas configurações do banco para autenticar contas reais.
             </div>
             {onOpenDbConfig && (
@@ -126,7 +126,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   onClose();
                   onOpenDbConfig();
                 }}
-                className="self-start text-[11px] font-semibold underline hover:text-amber-100"
+                className="self-start text-[11px] font-semibold underline text-white hover:text-zinc-300"
               >
                 Abrir Configurações do Banco →
               </button>
@@ -223,13 +223,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           )}
 
           {error && (
-            <div className="p-2.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-300 text-xs">
+            <div className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-700 text-zinc-200 text-xs">
               {error}
             </div>
           )}
 
           {successMessage && (
-            <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-mono">
+            <div className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-700 text-white text-xs font-mono">
               {successMessage}
             </div>
           )}

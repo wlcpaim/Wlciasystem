@@ -1,3 +1,7 @@
+`src/components/PdvModule.tsx` · 665 linhas · modified
+```tsx
+`src/components/PdvModule.tsx` · 662 linhas · unchanged
+```tsx
 import React, { useState } from "react";
 import { PdvProduct, CartItem, PdvSale, PaymentMethod, SystemUser } from "../types/system";
 import { ReceiptModal } from "./ReceiptModal";
@@ -197,7 +201,7 @@ export const PdvModule: React.FC<PdvModuleProps> = ({ currentUser, onRequireLogi
       {/* PDV Header Bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 rounded-2xl bg-[#0f1115] border border-[#232732] shadow-xl">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-500 flex items-center justify-center text-black font-bold text-lg shadow-md shadow-emerald-500/10">
+          <div className="w-10 h-10 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center text-white font-bold text-lg shadow-md shadow-none">
             ⚡
           </div>
           <div>
@@ -205,8 +209,8 @@ export const PdvModule: React.FC<PdvModuleProps> = ({ currentUser, onRequireLogi
               <h2 className="text-base font-bold text-zinc-100 tracking-tight">
                 PDV Express Terminal
               </h2>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-300 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-zinc-300 animate-pulse" />
                 Caixa Aberto
               </span>
             </div>
@@ -221,7 +225,7 @@ export const PdvModule: React.FC<PdvModuleProps> = ({ currentUser, onRequireLogi
             <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 block">
               Vendas do Turno
             </span>
-            <span className="text-sm font-bold font-mono text-emerald-400">
+            <span className="text-sm font-bold font-mono text-white">
               R$ {totalSoldToday.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
             </span>
           </div>
@@ -259,7 +263,7 @@ export const PdvModule: React.FC<PdvModuleProps> = ({ currentUser, onRequireLogi
                   placeholder="Buscar produto por nome ou código SKU..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full bg-[#0f1115] border border-[#232732] rounded-xl px-4 py-2.5 text-xs text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:border-emerald-500 transition-colors"
+                  className="w-full bg-[#0f1115] border border-[#232732] rounded-xl px-4 py-2.5 text-xs text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:border-zinc-500 transition-colors"
                 />
                 {search && (
                   <button 
@@ -278,7 +282,7 @@ export const PdvModule: React.FC<PdvModuleProps> = ({ currentUser, onRequireLogi
                     onClick={() => setCategoryFilter(cat)}
                     className={`py-2 px-3 text-[11px] font-medium rounded-xl whitespace-nowrap transition-all ${
                       categoryFilter === cat
-                        ? "bg-emerald-500/10 border border-emerald-500/30 text-emerald-400"
+                        ? "bg-zinc-800 border border-zinc-700 text-white"
                         : "bg-[#0f1115] border border-[#232732] text-zinc-400 hover:text-zinc-200"
                     }`}
                   >
@@ -294,10 +298,10 @@ export const PdvModule: React.FC<PdvModuleProps> = ({ currentUser, onRequireLogi
                 <div
                   key={product.id}
                   onClick={() => addToCart(product)}
-                  className="p-4 rounded-xl bg-[#0f1115] border border-[#232732] hover:border-emerald-500/40 cursor-pointer transition-all hover:scale-[1.01] group relative flex flex-col justify-between"
+                  className="p-4 rounded-xl bg-[#0f1115] border border-[#232732] hover:border-zinc-600 cursor-pointer transition-all hover:scale-[1.01] group relative flex flex-col justify-between"
                 >
                   {product.badge && (
-                    <span className="absolute top-3 right-3 text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-medium">
+                    <span className="absolute top-3 right-3 text-[9px] font-mono px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-300 font-medium">
                       {product.badge}
                     </span>
                   )}
@@ -305,7 +309,7 @@ export const PdvModule: React.FC<PdvModuleProps> = ({ currentUser, onRequireLogi
                     <span className="text-[10px] font-mono text-zinc-500 block">
                       {product.sku} · {product.category}
                     </span>
-                    <h4 className="font-semibold text-xs text-zinc-100 mt-1 group-hover:text-emerald-400 transition-colors">
+                    <h4 className="font-semibold text-xs text-zinc-100 mt-1 group-hover:text-white transition-colors">
                       {product.name}
                     </h4>
                     <p className="text-[11px] text-zinc-400 mt-1 line-clamp-2">
@@ -317,7 +321,7 @@ export const PdvModule: React.FC<PdvModuleProps> = ({ currentUser, onRequireLogi
                     <div className="text-sm font-bold font-mono text-zinc-100">
                       R$ {product.price.toFixed(2)}
                     </div>
-                    <span className="py-1 px-2 rounded-lg bg-[#181b24] group-hover:bg-emerald-500 group-hover:text-black text-zinc-300 text-[11px] font-medium transition-colors">
+                    <span className="py-1 px-2 rounded-lg bg-[#181b24] group-hover:bg-white group-hover:text-zinc-950 text-zinc-300 text-[11px] font-medium transition-colors">
                       + Adicionar
                     </span>
                   </div>
@@ -340,7 +344,7 @@ export const PdvModule: React.FC<PdvModuleProps> = ({ currentUser, onRequireLogi
                   {cart.length > 0 && (
                     <button
                       onClick={clearCart}
-                      className="text-[11px] text-zinc-500 hover:text-red-400 transition-colors"
+                      className="text-[11px] text-zinc-500 hover:text-zinc-300 transition-colors"
                     >
                       Limpar
                     </button>
@@ -387,7 +391,7 @@ export const PdvModule: React.FC<PdvModuleProps> = ({ currentUser, onRequireLogi
                           </button>
                           <button
                             onClick={() => removeFromCart(item.product.id)}
-                            className="text-zinc-500 hover:text-red-400 ml-1 text-xs"
+                            className="text-zinc-500 hover:text-zinc-300 ml-1 text-xs"
                           >
                             ✕
                           </button>
@@ -410,7 +414,7 @@ export const PdvModule: React.FC<PdvModuleProps> = ({ currentUser, onRequireLogi
                         onClick={() => setDiscountPercent(pct)}
                         className={`px-2 py-0.5 rounded text-[10px] font-mono transition-colors ${
                           discountPercent === pct
-                            ? "bg-amber-500 text-black font-bold"
+                            ? "bg-white text-zinc-950 font-bold"
                             : "bg-[#181b24] text-zinc-400 hover:text-zinc-200"
                         }`}
                       >
@@ -427,14 +431,14 @@ export const PdvModule: React.FC<PdvModuleProps> = ({ currentUser, onRequireLogi
                     <span>R$ {subtotal.toFixed(2)}</span>
                   </div>
                   {discountPercent > 0 && (
-                    <div className="flex justify-between text-amber-400">
+                    <div className="flex justify-between text-zinc-300">
                       <span>Desconto ({discountPercent}%):</span>
                       <span>- R$ {discountAmount.toFixed(2)}</span>
                     </div>
                   )}
                   <div className="flex justify-between text-base font-bold text-zinc-100 pt-1 border-t border-[#1c1f28]">
                     <span>TOTAL:</span>
-                    <span className="text-emerald-400">R$ {total.toFixed(2)}</span>
+                    <span className="text-white">R$ {total.toFixed(2)}</span>
                   </div>
                 </div>
 
@@ -442,7 +446,7 @@ export const PdvModule: React.FC<PdvModuleProps> = ({ currentUser, onRequireLogi
                 <button
                   disabled={cart.length === 0}
                   onClick={handleOpenCheckout}
-                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 disabled:opacity-40 disabled:cursor-not-allowed text-black font-bold text-xs tracking-wider uppercase shadow-lg shadow-emerald-500/10 transition-all flex items-center justify-center gap-2"
+                  className="w-full py-3 px-4 rounded-xl bg-white hover:bg-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed text-zinc-950 font-bold text-xs tracking-wider uppercase shadow-lg shadow-none transition-all flex items-center justify-center gap-2"
                 >
                   Cobrar Venda (Enter)
                 </button>
@@ -490,8 +494,8 @@ export const PdvModule: React.FC<PdvModuleProps> = ({ currentUser, onRequireLogi
                       <td className="py-3 text-zinc-400">{sale.date}</td>
                       <td className="py-3 text-zinc-300">{sale.cashierName}</td>
                       <td className="py-3 text-zinc-400">{sale.items.length} produto(s)</td>
-                      <td className="py-3 uppercase text-amber-400">{sale.paymentMethod}</td>
-                      <td className="py-3 font-bold text-emerald-400">R$ {sale.total.toFixed(2)}</td>
+                      <td className="py-3 uppercase text-zinc-300">{sale.paymentMethod}</td>
+                      <td className="py-3 font-bold text-white">R$ {sale.total.toFixed(2)}</td>
                       <td className="py-3 text-right">
                         <button
                           onClick={() => setReceiptSale(sale)}
@@ -528,7 +532,7 @@ export const PdvModule: React.FC<PdvModuleProps> = ({ currentUser, onRequireLogi
               <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400 block">
                 Valor Total a Pagar
               </span>
-              <div className="text-3xl font-extrabold font-mono text-emerald-400 mt-1">
+              <div className="text-3xl font-extrabold font-mono text-white mt-1">
                 R$ {total.toFixed(2)}
               </div>
             </div>
@@ -546,7 +550,7 @@ export const PdvModule: React.FC<PdvModuleProps> = ({ currentUser, onRequireLogi
                   onClick={() => setSelectedMethod(m.id as any)}
                   className={`p-2.5 rounded-xl text-center border transition-all ${
                     selectedMethod === m.id
-                      ? "bg-emerald-500/10 border-emerald-500 text-emerald-400 font-bold"
+                      ? "bg-zinc-800 border-zinc-500 text-white font-bold"
                       : "bg-[#14161f] border-[#232732] text-zinc-400 hover:text-zinc-200"
                   }`}
                 >
@@ -609,7 +613,7 @@ export const PdvModule: React.FC<PdvModuleProps> = ({ currentUser, onRequireLogi
                     value={cashGiven || ""}
                     onChange={(e) => setCashGiven(Number(e.target.value))}
                     placeholder="Ex: 100"
-                    className="w-full bg-[#14161d] border border-[#262a36] rounded-xl px-3 py-2 text-sm font-mono text-zinc-100 focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-[#14161d] border border-[#262a36] rounded-xl px-3 py-2 text-sm font-mono text-zinc-100 focus:outline-none focus:border-zinc-500"
                   />
                 </div>
                 <div className="flex gap-2">
@@ -626,7 +630,7 @@ export const PdvModule: React.FC<PdvModuleProps> = ({ currentUser, onRequireLogi
                 </div>
                 <div className="p-3 rounded-xl bg-[#14161f] border border-[#232732] flex justify-between items-center text-xs">
                   <span className="text-zinc-400">Troco a Devolver:</span>
-                  <span className="font-bold font-mono text-emerald-400 text-sm">
+                  <span className="font-bold font-mono text-white text-sm">
                     R$ {changeDue.toFixed(2)}
                   </span>
                 </div>
@@ -643,7 +647,7 @@ export const PdvModule: React.FC<PdvModuleProps> = ({ currentUser, onRequireLogi
             <button
               onClick={handleFinishSale}
               disabled={isProcessingPayment || (selectedMethod === "cash" && cashGiven < total)}
-              className="w-full mt-4 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-40 text-black font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2"
+              className="w-full mt-4 py-3 rounded-xl bg-white hover:bg-zinc-200 disabled:opacity-40 text-zinc-950 font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2"
             >
               {isProcessingPayment ? (
                 <span className="inline-block w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
@@ -660,3 +664,5 @@ export const PdvModule: React.FC<PdvModuleProps> = ({ currentUser, onRequireLogi
     </div>
   );
 };
+```
+```

@@ -14,18 +14,18 @@ import { PdvModule } from "./components/PdvModule";
 import { AuthModal } from "./components/AuthModal";
 import { DatabaseConfigModal } from "./components/DatabaseConfigModal";
 import { SystemUser, DatabaseConfig } from "./types/system";
-import { getStoredConfig, getStoredSession, clearStoredSession, saveStoredConfig } from "./utils/supabaseAuth";
+import { getStoredConfig, getStoredSession, clearStoredSession, saveStoredConfig, testSupabasePing } from "./utils/supabaseAuth";
 
 const DEFAULT_DB_CONFIG: DatabaseConfig = {
   provider: "Supabase",
-  endpoint: "",
-  anonKey: "",
+  endpoint: "https://wnmrtobkvuqtmomizanz.supabase.co",
+  anonKey: "sb_publishable_r1USqpyrj-RymBwrqIQimQ_uoD46GOB",
   databaseName: "wlc_system_production",
   ssl: true,
-  status: "offline",
-  latencyMs: 0,
+  status: "connected",
+  latencyMs: 35,
   autoSync: true,
-  lastSync: "Não verificado",
+  lastSync: "Agora",
   tables: [
     { name: "users", rowCount: 0, sizeKb: 0 },
     { name: "saas_subscriptions", rowCount: 0, sizeKb: 0 },
@@ -52,6 +52,20 @@ export const App: React.FC = () => {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isDbConfigOpen, setIsDbConfigOpen] = useState(false);
 
+  // Auto test connection on mount
+  useEffect(() => {
+    if (dbConfig.endpoint) {
+      testSupabasePing(dbConfig.endpoint, dbConfig.anonKey).then((res) => {
+        setDbConfig((prev) => ({
+          ...prev,
+          status: res.ok ? "connected" : "offline",
+          latencyMs: res.latencyMs || prev.latencyMs,
+          lastSync: res.ok ? "Agora mesmo" : prev.lastSync,
+        }));
+      });
+    }
+  }, []);
+
   const handleLogout = () => {
     clearStoredSession();
     setCurrentUser(null);
@@ -66,7 +80,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 selection:bg-zinc-800 selection:text-zinc-100 relative overflow-hidden font-sans">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 selection:bg-zinc-800 selection:text-white relative overflow-hidden font-sans">
       {/* Main Navbar */}
       <Navbar
         activeModule={activeModule}

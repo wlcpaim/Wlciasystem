@@ -35,42 +35,42 @@ export const ComparisonTable: React.FC = () => {
   ];
 
   return (
-    <section id="comparativo" className="py-24 relative overflow-hidden bg-slate-950/40">
+    <section id="comparativo" className="py-24 relative overflow-hidden bg-zinc-950/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono mb-4">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-300 text-xs font-mono mb-4">
             <span>DIFERENCIAL TÉCNICO</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
             Por que o WLC System supera Modelos Genéricos
           </h2>
-          <p className="text-base text-slate-400">
+          <p className="text-base text-zinc-400">
             Entenda a diferença arquitetural entre pedir código a um chatbot e acionar um motor determinístico de engenharia.
           </p>
         </div>
 
-        <div className="rounded-2xl glass-panel overflow-hidden border border-slate-800">
+        <div className="rounded-2xl glass-panel overflow-hidden border border-zinc-800">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs sm:text-sm">
               <thead>
-                <tr className="bg-slate-900/90 border-b border-slate-800 text-slate-400 uppercase font-mono text-[11px]">
+                <tr className="bg-zinc-900/90 border-b border-zinc-800 text-zinc-400 uppercase font-mono text-[11px]">
                   <th className="p-4 sm:p-5">Requisito Corporativo</th>
-                  <th className="p-4 sm:p-5 text-slate-500">LLMs Convencionais</th>
-                  <th className="p-4 sm:p-5 text-emerald-400 font-bold bg-emerald-500/5">WLC 1.1.0 System</th>
+                  <th className="p-4 sm:p-5 text-zinc-500">LLMs Convencionais</th>
+                  <th className="p-4 sm:p-5 text-zinc-100 font-bold bg-zinc-900/40">WLC 1.1.0 System</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/80">
+              <tbody className="divide-y divide-zinc-800/80">
                 {rows.map((r, i) => (
-                  <tr key={i} className="hover:bg-slate-900/40 transition-colors">
+                  <tr key={i} className="hover:bg-zinc-900/40 transition-colors">
                     <td className="p-4 sm:p-5 font-semibold text-white">{r.criterion}</td>
-                    <td className="p-4 sm:p-5 text-slate-400 flex items-center space-x-2">
-                      <span className="text-red-400 font-bold">✕</span>
+                    <td className="p-4 sm:p-5 text-zinc-400 flex items-center space-x-2">
+                      <span className="text-zinc-500 font-bold">✕</span>
                       <span>{r.traditional}</span>
                     </td>
-                    <td className="p-4 sm:p-5 text-emerald-300 font-medium bg-emerald-500/5">
+                    <td className="p-4 sm:p-5 text-zinc-200 font-medium bg-zinc-900/40">
                       <div className="flex items-center space-x-2">
-                        <span className="text-emerald-400 font-bold">✓</span>
+                        <span className="text-white font-bold">✓</span>
                         <span>{r.wlc}</span>
                       </div>
                     </td>
