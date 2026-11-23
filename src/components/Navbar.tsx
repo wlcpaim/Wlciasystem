@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { SystemUser, DatabaseConfig } from "../types/system";
 
+export type AppModule = "landing" | "finance" | "growth" | "automation" | "cognitive" | "saas" | "pdv";
+
 interface NavbarProps {
-  activeModule: "landing" | "saas" | "pdv";
-  onSelectModule: (module: "landing" | "saas" | "pdv") => void;
+  activeModule: AppModule;
+  onSelectModule: (module: AppModule) => void;
   currentUser: SystemUser | null;
   onOpenAuth: () => void;
   onLogout: () => void;
@@ -22,6 +24,16 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const navItems: { id: AppModule; label: string }[] = [
+    { id: "landing", label: "Visão Geral" },
+    { id: "finance", label: "Financeiro & PIX" },
+    { id: "growth", label: "Growth CRM" },
+    { id: "automation", label: "Automações n8n" },
+    { id: "cognitive", label: "Cognitive AI" },
+    { id: "saas", label: "SaaS Multi-Tenant" },
+    { id: "pdv", label: "PDV Express" },
+  ];
+
   return (
     <header className="sticky top-0 z-50 backdrop-blur-md bg-zinc-950/90 border-b border-zinc-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -36,35 +48,26 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
             <div>
               <span className="font-semibold text-sm tracking-tight text-zinc-100 font-mono">
-                WLC<span className="text-zinc-400 font-normal">SYSTEM</span>
+                WLC<span className="text-zinc-400 font-normal">ENTERPRISE</span>
               </span>
             </div>
           </div>
 
           {/* Module Switcher Tabs (Center) */}
-          <nav className="hidden md:flex items-center rounded-xl bg-zinc-900/90 p-1 border border-zinc-800 shadow-sm">
-            <button
-              onClick={() => onSelectModule("landing")}
-              className={"py-1.5 px-3.5 text-xs font-medium rounded-lg transition-colors " + (activeModule === "landing" ? "bg-zinc-800 text-zinc-100 shadow-sm" : "text-zinc-400 hover:text-zinc-200")}
-            >
-              Visão Geral
-            </button>
-            <button
-              onClick={() => onSelectModule("saas")}
-              className={"py-1.5 px-3.5 text-xs font-medium rounded-lg transition-colors flex items-center gap-1.5 " + (activeModule === "saas" ? "bg-zinc-800 text-zinc-100 shadow-sm" : "text-zinc-400 hover:text-zinc-200")}
-            >
-              <span>Gestão SaaS</span>
-            </button>
-            <button
-              onClick={() => onSelectModule("pdv")}
-              className={"py-1.5 px-3.5 text-xs font-medium rounded-lg transition-colors flex items-center gap-1.5 " + (activeModule === "pdv" ? "bg-zinc-800 text-zinc-100 shadow-sm" : "text-zinc-400 hover:text-zinc-200")}
-            >
-              <span>PDV Express</span>
-            </button>
+          <nav className="hidden lg:flex items-center rounded-xl bg-zinc-900/90 p-1 border border-zinc-800 shadow-sm overflow-x-auto">
+            {navItems.map(item => (
+              <button
+                key={item.id}
+                onClick={() => onSelectModule(item.id)}
+                className={"py-1.5 px-3 text-xs font-medium rounded-lg transition-colors whitespace-nowrap " + (activeModule === item.id ? "bg-zinc-800 text-zinc-100 shadow-sm" : "text-zinc-400 hover:text-zinc-200")}
+              >
+                {item.label}
+              </button>
+            ))}
           </nav>
 
           {/* Right Action Bar */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden sm:flex items-center gap-3">
             {/* Database Status Pill */}
             <button
               onClick={onOpenDbConfig}
@@ -110,7 +113,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Mobile Burger */}
-          <div className="flex items-center gap-2 md:hidden">
+          <div className="flex items-center gap-2 lg:hidden">
             <button
               onClick={onOpenDbConfig}
               className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 text-xs font-mono"
@@ -132,27 +135,18 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
 
-        {/* Mobile Navigation Drawer */}
+        {/* Mobile Drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-3 border-t border-zinc-800 space-y-1.5 animate-fade-in">
-            <button
-              onClick={() => { onSelectModule("landing"); setMobileMenuOpen(false); }}
-              className="w-full text-left py-2 px-3 rounded-lg text-xs font-medium text-zinc-200 hover:bg-zinc-900"
-            >
-              Visão Geral
-            </button>
-            <button
-              onClick={() => { onSelectModule("saas"); setMobileMenuOpen(false); }}
-              className="w-full text-left py-2 px-3 rounded-lg text-xs font-medium text-zinc-200 hover:bg-zinc-900"
-            >
-              Gestão SaaS
-            </button>
-            <button
-              onClick={() => { onSelectModule("pdv"); setMobileMenuOpen(false); }}
-              className="w-full text-left py-2 px-3 rounded-lg text-xs font-medium text-zinc-200 hover:bg-zinc-900"
-            >
-              PDV Express
-            </button>
+          <div className="lg:hidden py-3 border-t border-zinc-800 space-y-1 animate-fade-in">
+            {navItems.map(item => (
+              <button
+                key={item.id}
+                onClick={() => { onSelectModule(item.id); setMobileMenuOpen(false); }}
+                className={"w-full text-left py-2 px-3 rounded-lg text-xs font-medium transition-colors " + (activeModule === item.id ? "bg-zinc-800 text-zinc-100" : "text-zinc-400 hover:bg-zinc-900")}
+              >
+                {item.label}
+              </button>
+            ))}
             <div className="pt-2 border-t border-zinc-800">
               {currentUser ? (
                 <div className="flex items-center justify-between py-2 px-3">

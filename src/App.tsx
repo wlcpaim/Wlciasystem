@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Navbar } from "./components/Navbar";
+import { Navbar, AppModule } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { TrustBadges } from "./components/TrustBadges";
 import { EnterpriseSegment } from "./components/EnterpriseSegment";
@@ -11,6 +11,10 @@ import { Faq } from "./components/Faq";
 import { Footer } from "./components/Footer";
 import { SaasDashboard } from "./components/SaasDashboard";
 import { PdvModule } from "./components/PdvModule";
+import { FinanceModule } from "./components/FinanceModule";
+import { CrmGrowthModule } from "./components/CrmGrowthModule";
+import { AutomationModule } from "./components/AutomationModule";
+import { CognitiveModule } from "./components/CognitiveModule";
 import { AuthModal } from "./components/AuthModal";
 import { DatabaseConfigModal } from "./components/DatabaseConfigModal";
 import { SystemUser, DatabaseConfig } from "./types/system";
@@ -36,7 +40,7 @@ const DEFAULT_DB_CONFIG: DatabaseConfig = {
 };
 
 export const App: React.FC = () => {
-  const [activeModule, setActiveModule] = useState<"landing" | "saas" | "pdv">("landing");
+  const [activeModule, setActiveModule] = useState<AppModule>("landing");
   
   // Real session state, loaded from local storage
   const [currentUser, setCurrentUser] = useState<SystemUser | null>(() => {
@@ -79,12 +83,22 @@ export const App: React.FC = () => {
     saveStoredConfig(newConf);
   };
 
+  const handleModuleSelect = (mod: AppModule) => {
+    // If selecting protected modules without login, prompt auth
+    const isProtected = mod !== "landing";
+    if (isProtected && !currentUser) {
+      setIsAuthOpen(true);
+      return;
+    }
+    setActiveModule(mod);
+  };
+
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 selection:bg-zinc-800 selection:text-white relative overflow-hidden font-sans">
-      {/* Main Navbar */}
+    <div className="min-h-screen bg-black text-zinc-100 flex flex-col font-sans selection:bg-zinc-800 selection:text-white antialiased">
+      {/* Navbar with full Enterprise Module switchers */}
       <Navbar
         activeModule={activeModule}
-        onSelectModule={setActiveModule}
+        onSelectModule={handleModuleSelect}
         currentUser={currentUser}
         onOpenAuth={() => setIsAuthOpen(true)}
         onLogout={handleLogout}
@@ -92,8 +106,9 @@ export const App: React.FC = () => {
         onOpenDbConfig={() => setIsDbConfigOpen(true)}
       />
 
-      {/* Dynamic Content by Active Module */}
-      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      {/* Main Container */}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {/* Module: Landing / Overview */}
         {activeModule === "landing" && (
           <div className="space-y-16">
             <Hero />
@@ -102,66 +117,49 @@ export const App: React.FC = () => {
             <RoiChart />
             <Features />
             <ComparisonTable />
-            <Pricing />
+            <Pricing onSelectPlan={() => setIsAuthOpen(true)} />
             <Faq />
-            <Footer />
           </div>
         )}
 
-        {activeModule === "saas" && (
-          currentUser ? (
-            <SaasDashboard />
-          ) : (
-            <div className="py-20 text-center max-w-md mx-auto space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mx-auto text-zinc-300 font-mono text-sm">
-                LOCK
-              </div>
-              <h2 className="text-xl font-semibold text-zinc-100">Acesso Restrito ao Painel SaaS</h2>
-              <p className="text-xs text-zinc-400">
-                Faça login com sua conta real ou configure o Supabase para gerenciar assinaturas.
-              </p>
-              <div className="pt-2 flex justify-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => setIsAuthOpen(true)}
-                  className="py-2 px-4 rounded-xl bg-zinc-100 hover:bg-white text-zinc-950 font-semibold text-xs tracking-wide transition-colors"
-                >
-                  Entrar / Cadastrar
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsDbConfigOpen(true)}
-                  className="py-2 px-4 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 text-xs font-medium transition-colors"
-                >
-                  Configurar Supabase
-                </button>
-              </div>
-            </div>
-          )
-        )}
+        {/* Module: WLC Finance & PIX */}
+        {activeModule === "finance" && <FinanceModule />}
 
-        {activeModule === "pdv" && (
-          <PdvModule
-            currentUser={currentUser}
-            onRequireLogin={() => setIsAuthOpen(true)}
-          />
-        )}
+        {/* Module: WLC Growth CRM */}
+        {activeModule === "growth" && <CrmGrowthModule />}
+
+        {/* Module: WLC n8n Intelligence & Flow Map */}
+        {activeModule === "automation" && <AutomationModule />}
+
+        {/* Module: WLC Cognitive AI */}
+        {activeModule === "cognitive" && <CognitiveModule />}
+
+        {/* Module: SaaS Management */}
+        {activeModule === "saas" && <SaasDashboard />}
+
+        {/* Module: PDV Express */}
+        {activeModule === "pdv" && <PdvModule currentUser={currentUser} />}
       </main>
+
+      {/* Global Minimalist Footer */}
+      <Footer />
 
       {/* Modals */}
       <AuthModal
         isOpen={isAuthOpen}
         onClose={() => setIsAuthOpen(false)}
-        onLoginSuccess={(user) => setCurrentUser(user)}
         dbConfig={dbConfig}
-        onOpenDbConfig={() => setIsDbConfigOpen(true)}
+        onLoginSuccess={(user) => {
+          setCurrentUser(user);
+          setIsAuthOpen(false);
+        }}
       />
 
       <DatabaseConfigModal
         isOpen={isDbConfigOpen}
         onClose={() => setIsDbConfigOpen(false)}
-        config={dbConfig}
-        onUpdateConfig={handleUpdateConfig}
+        currentConfig={dbConfig}
+        onSaveConfig={handleUpdateConfig}
       />
     </div>
   );
