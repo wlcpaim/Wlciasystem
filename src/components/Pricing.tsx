@@ -10,103 +10,145 @@ export const Pricing: React.FC = () => {
       name: "Starter",
       priceMonthly: 149,
       priceAnnual: 119,
-      description: "Ideal para times pequenos validando fluxos automatizados.",
-      features: ["Até 5 desenvolvedores", "System 1.1.0 Determinístico", "50 deploys mensais", "Diagnóstico de repositório"],
-      cta: "Começar Teste Grátis",
+      description: "Ideal para times enxutos que querem acelerar diagnósticos e eliminar retrabalho.",
+      features: [
+        "Até 3 projetos conectados",
+        "Terminal WLC System (CLI determinística)",
+        "Diagnóstico estático em tempo real",
+        "Integração nativa com GitHub",
+        "Suporte da comunidade",
+      ],
+      cta: "Começar Agora",
     },
     {
       id: "pro",
-      name: "Pro Scaling",
+      name: "Professional",
       popular: true,
-      badge: "Mais Escolhido",
+      badge: "Mais Recomendado",
       priceMonthly: 399,
-      priceAnnual: 299,
-      description: "Para empresas escalando produtos com garantia de ROI.",
-      features: ["Até 25 desenvolvedores", "Copilot PRO + System Bridge", "Deploys ilimitados", "Calculadora e auditoria de ROI", "Suporte prioritário 24/7"],
-      cta: "Assinar Pro",
+      priceAnnual: 319,
+      description: "Para squads em escala que exigem máxima velocidade e integração de bots por bridge.",
+      features: [
+        "Projetos ilimitados",
+        "Bridge de comandos entre bots (Realtime)",
+        "Calculadora de ROI com projeção avançada",
+        "Diffs visuais e commits assinados",
+        "Suporte prioritário via chat técnico",
+        "Acesso à API de terminal /api/system/command",
+      ],
+      cta: "Testar 14 Dias Grátis",
     },
     {
       id: "enterprise",
       name: "Enterprise",
       priceMonthly: 999,
       priceAnnual: 799,
-      description: "Infraestrutura dedicada e compliance de nível bancário.",
-      features: ["Devs ilimitados", "SLA 99.99% garantido", "Isolamento VPC & Chaves Próprias", "Engenheiro de Soluções Dedicado"],
-      cta: "Falar com Especialista",
+      description: "Para grandes organizações com regras rígidas de segurança, auditoria e customização.",
+      features: [
+        "SLA de 99.99% garantido em contrato",
+        "Workflows dedicados do WLC Runner",
+        "Auditoria de logs e eventos em banco isolado",
+        "Gestor técnico de contas dedicado",
+        "Customização de regras determinísticas",
+      ],
+      cta: "Falar com Consultor",
     },
   ];
 
   return (
-    <section id="precos" className="py-24 bg-slate-900/40 border-t border-slate-800">
+    <section id="planos" className="py-24 relative overflow-hidden bg-slate-950/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="text-emerald-400 font-semibold text-sm tracking-widest uppercase">Preços Transparentes</span>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white mt-3">
-            Planos que se Pagam Sozinhos
+        
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono mb-4">
+            <span>PLANOS TRANSPARENTES</span>
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
+            Invista na Produtividade do seu Time
           </h2>
+          <p className="text-base text-slate-400 mb-8">
+            Escolha o plano ideal para a dimensão do seu squad de tecnologia. Todos incluem o motor WLC System.
+          </p>
 
-          <div className="mt-8 flex items-center justify-center gap-3">
-            <span className={!annual ? "text-white font-bold text-sm" : "text-slate-400 text-sm"}>Mensal</span>
+          <div className="inline-flex items-center p-1 rounded-xl bg-slate-900 border border-slate-800 text-xs font-semibold">
             <button
-              onClick={() => setAnnual(!annual)}
-              className="w-14 h-8 bg-slate-800 rounded-full p-1 relative border border-slate-700 transition-colors"
+              onClick={() => setAnnual(false)}
+              className={`px-4 py-2 rounded-lg transition-all ${
+                !annual ? "bg-slate-800 text-white shadow" : "text-slate-400 hover:text-white"
+              }`}
             >
-              <div
-                className={"w-6 h-6 rounded-full bg-emerald-400 transition-transform " + (annual ? "translate-x-6" : "translate-x-0")}
-              ></div>
+              Faturamento Mensal
             </button>
-            <span className={annual ? "text-white font-bold text-sm flex items-center gap-1.5" : "text-slate-400 text-sm flex items-center gap-1.5"}>
-              Anual <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-bold">20% OFF</span>
-            </span>
+            <button
+              onClick={() => setAnnual(true)}
+              className={`px-4 py-2 rounded-lg transition-all flex items-center space-x-1.5 ${
+                annual ? "bg-emerald-500 text-slate-950 shadow-md font-bold" : "text-slate-400 hover:text-white"
+              }`}
+            >
+              <span>Faturamento Anual</span>
+              <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-slate-950/20">
+                -20% OFF
+              </span>
+            </button>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
           {plans.map((p) => {
             const price = annual ? p.priceAnnual : p.priceMonthly;
             return (
               <div
                 key={p.id}
-                className={"rounded-2xl p-8 flex flex-col justify-between border relative transition-all " +
-                  (p.popular
-                    ? "bg-slate-900 border-emerald-500 shadow-2xl shadow-emerald-500/10 scale-105 z-10"
-                    : "bg-slate-950/80 border-slate-800 hover:border-slate-700")}
+                className={`p-8 rounded-2xl flex flex-col justify-between relative transition-all ${
+                  p.popular
+                    ? "glass-glow-emerald border-emerald-500/40 -translate-y-2"
+                    : "glass-card-interactive"
+                }`}
               >
-                {p.badge && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-emerald-500 text-slate-950 text-xs font-extrabold uppercase tracking-wider shadow-md">
+                {p.popular && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 text-[10px] font-extrabold uppercase tracking-widest shadow-md">
                     {p.badge}
                   </div>
                 )}
+
                 <div>
-                  <h3 className="text-xl font-bold text-white">{p.name}</h3>
-                  <p className="text-sm text-slate-400 mt-2">{p.description}</p>
-                  <div className="my-6">
-                    <span className="text-4xl font-extrabold text-white">R$ {price}</span>
-                    <span className="text-slate-400 text-sm"> / mês</span>
+                  <div className="text-xl font-bold text-white mb-1">{p.name}</div>
+                  <p className="text-xs text-slate-400 mb-6 min-h-[36px]">{p.description}</p>
+
+                  <div className="mb-6 pb-6 border-b border-slate-800/80">
+                    <span className="text-4xl font-extrabold font-mono text-white">R$ {price}</span>
+                    <span className="text-xs text-slate-400 ml-1.5 font-mono">/ mês</span>
+                    {annual && (
+                      <div className="text-[11px] text-emerald-400 font-mono mt-1">Cobrado anualmente</div>
+                    )}
                   </div>
 
-                  <ul className="space-y-3 text-sm text-slate-300">
+                  <ul className="space-y-3 mb-8 text-xs text-slate-300">
                     {p.features.map((f, i) => (
-                      <li key={i} className="flex items-center gap-2">
-                        <span className="text-emerald-400 font-bold">✓</span> {f}
+                      <li key={i} className="flex items-start space-x-2.5">
+                        <svg className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>{f}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <a
-                  href="#calculadora-roi"
-                  className={"mt-8 w-full py-3 rounded-xl font-bold text-center block transition-all " +
-                    (p.popular
-                      ? "bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-lg shadow-emerald-500/30"
-                      : "bg-slate-800 hover:bg-slate-700 text-white")}
+                <button
+                  className={`w-full py-3.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
+                    p.popular
+                      ? "bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-950 hover:from-emerald-300 hover:to-teal-300 shadow-lg shadow-emerald-500/25"
+                      : "bg-slate-800 hover:bg-slate-700 text-white"
+                  }`}
                 >
                   {p.cta}
-                </a>
+                </button>
               </div>
             );
           })}
         </div>
+
       </div>
     </section>
   );

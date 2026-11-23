@@ -1,15 +1,35 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="dark scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WLC SaaS Flow — Plataforma Inteligente com Projeção de ROI</title>
-    <meta name="description" content="Automatize processos de engenharia de software e multiplique o ROI da sua equipe em até 4.8x." />
+    <title>WLC Flow • Plataforma Inteligente de Engenharia & Projeção de ROI</title>
+    <meta name="description" content="Automatize processos de engenharia com bots determinísticos e multiplique o ROI da sua equipe em até 4.8x com o WLC 1.1.0 System." />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            },
+            colors: {
+              brand: {
+                500: '#10b981',
+                600: '#059669',
+              }
+            }
+          }
+        }
+      }
+    </script>
   </head>
-  <body class="bg-slate-950 text-slate-100 antialiased selection:bg-emerald-500 selection:text-slate-950">
+  <body class="bg-[#030712] text-slate-100 antialiased selection:bg-emerald-500 selection:text-slate-950 font-sans">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

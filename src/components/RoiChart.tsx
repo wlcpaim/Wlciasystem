@@ -7,172 +7,181 @@ export const RoiChart: React.FC = () => {
 
   const results = useMemo(() => calculateRoi(inputs), [inputs]);
 
-  const maxVal = Math.max(...results.monthlyProjections.map((p) => Math.max(p.withoutPlatform, p.withPlatform)), 1);
+  const update = <K extends keyof RoiInputs>(key: K, val: number) => {
+    setInputs((prev) => ({ ...prev, [key]: val }));
+  };
+
+  const formatBRL = (val: number) => {
+    return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }).format(val);
+  };
 
   return (
-    <section id="calculadora-roi" className="py-20 bg-slate-900/60 border-y border-slate-800 relative">
+    <section id="roi-simulador" className="py-24 relative overflow-hidden bg-slate-950/60 border-y border-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-emerald-400 font-semibold text-sm tracking-widest uppercase">
-            Simulador Financeiro
-          </span>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white mt-3">
-            Calcule o Retorno Real do seu Investimento
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono mb-4">
+            <span>SIMULADOR DE RETORNO EM TEMPO REAL</span>
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
+            Projete o Impacto Financeiro no seu Squad
           </h2>
-          <p className="text-slate-400 mt-4 text-base sm:text-lg">
-            Ajuste os parâmetros da sua equipe para ver o retorno líquido e gráfico de economia mês a mês.
+          <p className="text-base text-slate-400">
+            Ajuste os parâmetros da sua equipe técnica para calcular a economia de horas e o retorno de capital anual garantido pela automação WLC System.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          <div className="lg:col-span-5 bg-slate-950 p-6 sm:p-8 rounded-2xl border border-slate-800 space-y-6 shadow-xl">
-            <h3 className="text-lg font-bold text-white flex items-center justify-between">
-              <span>Parâmetros da Operação</span>
-              <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded border border-emerald-500/20">
-                WLC Model 1.1
-              </span>
+          
+          <div className="lg:col-span-5 p-6 sm:p-8 rounded-2xl glass-panel space-y-6">
+            <h3 className="text-lg font-bold text-white flex items-center space-x-2 border-b border-slate-800 pb-4">
+              <span>Parâmetros Operacionais</span>
             </h3>
 
-            <div>
-              <div className="flex justify-between text-sm mb-2">
-                <span className="text-slate-300">Desenvolvedores</span>
-                <span className="font-bold text-white font-mono">{inputs.teamSize} devs</span>
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span className="text-slate-300">Tamanho da Equipe (Devs)</span>
+                <span className="font-mono font-bold text-emerald-400">{inputs.teamSize} devs</span>
               </div>
               <input
                 type="range"
-                min="2"
-                max="60"
+                min={2}
+                max={50}
                 value={inputs.teamSize}
-                onChange={(e) => setInputs({ ...inputs, teamSize: Number(e.target.value) })}
-                className="w-full accent-emerald-500 bg-slate-800 h-2 rounded-lg cursor-pointer"
+                onChange={(e) => update("teamSize", Number(e.target.value))}
+                className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
               />
             </div>
 
-            <div>
-              <div className="flex justify-between text-sm mb-2">
-                <span className="text-slate-300">Salário Médio</span>
-                <span className="font-bold text-white font-mono">R$ {inputs.avgSalary.toLocaleString()}</span>
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span className="text-slate-300">Salário Médio Mensal (CLT/PJ)</span>
+                <span className="font-mono font-bold text-emerald-400">{formatBRL(inputs.avgSalary)}</span>
               </div>
               <input
                 type="range"
-                min="4000"
-                max="35000"
-                step="1000"
+                min={4000}
+                max={30000}
+                step={500}
                 value={inputs.avgSalary}
-                onChange={(e) => setInputs({ ...inputs, avgSalary: Number(e.target.value) })}
-                className="w-full accent-emerald-500 bg-slate-800 h-2 rounded-lg cursor-pointer"
+                onChange={(e) => update("avgSalary", Number(e.target.value))}
+                className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
               />
             </div>
 
-            <div>
-              <div className="flex justify-between text-sm mb-2">
-                <span className="text-slate-300">Horas de retrabalho / semana</span>
-                <span className="font-bold text-white font-mono">{inputs.hoursWastedPerWeek}h / dev</span>
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span className="text-slate-300">Horas em Retrabalho / Boilerplate (Semana)</span>
+                <span className="font-mono font-bold text-emerald-400">{inputs.hoursWastedPerWeek}h / dev</span>
               </div>
               <input
                 type="range"
-                min="4"
-                max="25"
+                min={4}
+                max={25}
                 value={inputs.hoursWastedPerWeek}
-                onChange={(e) => setInputs({ ...inputs, hoursWastedPerWeek: Number(e.target.value) })}
-                className="w-full accent-emerald-500 bg-slate-800 h-2 rounded-lg cursor-pointer"
+                onChange={(e) => update("hoursWastedPerWeek", Number(e.target.value))}
+                className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
               />
             </div>
 
-            <div>
-              <div className="flex justify-between text-sm mb-2">
-                <span className="text-slate-300">Ganho de Eficiência</span>
-                <span className="font-bold text-emerald-400 font-mono">+{inputs.efficiencyGainPct}%</span>
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span className="text-slate-300">Custo Mensal de Infraestrutura / Cloud</span>
+                <span className="font-mono font-bold text-emerald-400">{formatBRL(inputs.monthlyInfraCost)}</span>
               </div>
               <input
                 type="range"
-                min="10"
-                max="60"
-                step="5"
-                value={inputs.efficiencyGainPct}
-                onChange={(e) => setInputs({ ...inputs, efficiencyGainPct: Number(e.target.value) })}
-                className="w-full accent-emerald-500 bg-slate-800 h-2 rounded-lg cursor-pointer"
+                min={1000}
+                max={40000}
+                step={500}
+                value={inputs.monthlyInfraCost}
+                onChange={(e) => update("monthlyInfraCost", Number(e.target.value))}
+                className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
               />
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 flex justify-between items-center">
-              <span className="text-xs text-slate-400">Payback Estimado:</span>
-              <span className="text-sm font-bold text-emerald-400 font-mono">{results.paybackMonths} meses</span>
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span className="text-slate-300">Eficiência Esperada com WLC</span>
+                <span className="font-mono font-bold text-emerald-400">{inputs.efficiencyGainPct}%</span>
+              </div>
+              <input
+                type="range"
+                min={15}
+                max={70}
+                step={5}
+                value={inputs.efficiencyGainPct}
+                onChange={(e) => update("efficiencyGainPct", Number(e.target.value))}
+                className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+              />
             </div>
           </div>
 
-          <div className="lg:col-span-7 bg-slate-950 p-6 sm:p-8 rounded-2xl border border-slate-800 shadow-xl space-y-8">
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-              <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-                <div className="text-xs text-slate-400">Economia Anual</div>
-                <div className="text-2xl font-extrabold text-emerald-400 mt-1 font-mono">
-                  R$ {results.annualSavings.toLocaleString()}
-                </div>
+          <div className="lg:col-span-7 space-y-6">
+            <div className="p-8 rounded-2xl glass-glow-emerald relative overflow-hidden">
+              <div className="text-xs font-mono uppercase tracking-wider text-emerald-300 mb-1">
+                Economia Líquida Anual Estimada
               </div>
-
-              <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-                <div className="text-xs text-slate-400">ROI Projetado</div>
-                <div className="text-2xl font-extrabold text-cyan-400 mt-1 font-mono">
-                  +{results.roiPercentage}%
-                </div>
+              <div className="text-4xl sm:text-6xl font-black text-white font-mono tracking-tight">
+                {formatBRL(results.netAnnualReturn)}
               </div>
-
-              <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 col-span-2 sm:col-span-1">
-                <div className="text-xs text-slate-400">Horas Poupadas/Ano</div>
-                <div className="text-2xl font-extrabold text-white mt-1 font-mono">
-                  {results.hoursSavedAnnual.toLocaleString()} h
-                </div>
+              <div className="mt-3 text-sm text-slate-300 flex items-center space-x-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                <span>Retorno sobre investimento (ROI) de <strong className="text-emerald-400 font-mono text-base">{results.roiPercentage}%</strong></span>
               </div>
             </div>
 
-            <div>
-              <div className="flex items-center justify-between text-xs text-slate-400 mb-4 font-mono">
-                <span>Comparativo de Custos (12 Meses)</span>
-                <div className="flex items-center gap-4">
-                  <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-slate-700"></span> Sem Plataforma</span>
-                  <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-emerald-500"></span> Com WLC Flow</span>
-                </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="p-5 rounded-xl glass-card-interactive">
+                <div className="text-xs text-slate-400 mb-1">Horas Poupadas / Ano</div>
+                <div className="text-2xl font-bold font-mono text-white">{results.hoursSavedAnnual} hrs</div>
+                <div className="text-[11px] text-emerald-400 mt-1">Tempo focado no produto</div>
               </div>
 
-              <div className="h-64 flex items-end gap-2 sm:gap-3 pt-6 px-2 bg-slate-900/50 rounded-xl border border-slate-800/80">
-                {results.monthlyProjections.map((p, i) => {
-                  const pctWithout = Math.round((p.withoutPlatform / maxVal) * 100);
-                  const pctWith = Math.round((p.withPlatform / maxVal) * 100);
+              <div className="p-5 rounded-xl glass-card-interactive">
+                <div className="text-xs text-slate-400 mb-1">Payback do Investimento</div>
+                <div className="text-2xl font-bold font-mono text-cyan-400">{results.paybackMonths} meses</div>
+                <div className="text-[11px] text-slate-400 mt-1">Retorno ultra-rápido</div>
+              </div>
 
+              <div className="p-5 rounded-xl glass-card-interactive">
+                <div className="text-xs text-slate-400 mb-1">Custo Dev Tradicional</div>
+                <div className="text-2xl font-bold font-mono text-slate-300">{formatBRL(results.annualDevCost)}</div>
+                <div className="text-[11px] text-slate-500 mt-1">Base anual bruta</div>
+              </div>
+            </div>
+
+            <div className="p-6 rounded-2xl glass-panel space-y-4">
+              <div className="flex items-center justify-between">
+                <h4 className="text-sm font-semibold text-white">Curva de Economia Acumulada (12 Meses)</h4>
+                <span className="text-xs font-mono text-emerald-400">{formatBRL(results.annualSavings)} total</span>
+              </div>
+              <div className="grid grid-cols-6 sm:grid-cols-12 gap-1.5 items-end h-28 pt-4">
+                {results.monthlyProjections.map((p, idx) => {
+                  const maxSavings = results.monthlyProjections[results.monthlyProjections.length - 1]?.accumulatedSavings || 1;
+                  const heightPct = Math.max(15, Math.round((p.accumulatedSavings / maxSavings) * 100));
                   return (
-                    <div key={i} className="flex-1 flex flex-col items-center gap-1 h-full justify-end group">
-                      <div className="w-full flex items-end justify-center gap-1 h-48">
-                        <div
-                          style={{ height: pctWithout + "%" }}
-                          className="w-1/2 bg-slate-700 rounded-t-sm transition-all duration-300 group-hover:bg-slate-600"
-                        ></div>
-                        <div
-                          style={{ height: pctWith + "%" }}
-                          className="w-1/2 bg-emerald-500 rounded-t-sm transition-all duration-300 shadow-sm shadow-emerald-500/20 group-hover:bg-emerald-400"
-                        ></div>
-                      </div>
-                      <span className="text-[10px] text-slate-500 font-mono mt-1">M{i + 1}</span>
+                    <div key={idx} className="flex flex-col items-center group relative h-full justify-end">
+                      <div
+                        style={{ height: `${heightPct}%` }}
+                        className="w-full rounded-t bg-gradient-to-t from-emerald-600 to-teal-400 group-hover:from-emerald-400 group-hover:to-cyan-300 transition-all cursor-pointer"
+                      />
+                      <span className="text-[9px] text-slate-500 font-mono mt-1">M{idx + 1}</span>
                     </div>
                   );
                 })}
               </div>
-
-              <div className="mt-4 flex items-center justify-between text-xs text-slate-400 px-2 font-mono">
-                <span>Retorno Líquido no 1º Ano:</span>
-                <span className="text-emerald-400 font-bold">R$ {results.netAnnualReturn.toLocaleString()}</span>
+              <div className="text-xs text-slate-400 flex items-center justify-between border-t border-slate-800/80 pt-3">
+                <span>Início: Mês 1</span>
+                <span>Projeção validada com base em métricas de engenharia</span>
+                <span>Mês 12</span>
               </div>
             </div>
 
-            <div className="pt-2">
-              <a
-                href="#precos"
-                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-bold text-center block transition-all shadow-lg shadow-emerald-500/25"
-              >
-                Garantir Retorno com WLC Flow
-              </a>
-            </div>
           </div>
+
         </div>
+
       </div>
     </section>
   );
