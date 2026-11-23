@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { SystemUser, DatabaseConfig } from "../types/system";
+import { supabaseSignIn, supabaseSignUp } from "../utils/supabaseAuth";
 
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
   onLoginSuccess: (user: SystemUser) => void;
   dbConfig: DatabaseConfig;
+  onOpenDbConfig?: () => void;
 }
 
 export const AuthModal: React.FC<AuthModalProps> = ({
@@ -13,125 +15,150 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   onClose,
   onLoginSuccess,
   dbConfig,
+  onOpenDbConfig,
 }) => {
   const [tab, setTab] = useState<"login" | "register" | "recovery">("login");
-  const [email, setEmail] = useState("admin@wlcsystem.com.br");
-  const [password, setPassword] = useState("••••••••");
-  const [name, setName] = useState("Wilson Paim");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [role, setRole] = useState<"admin" | "manager" | "cashier">("admin");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const hasConfig = Boolean(dbConfig.endpoint && dbConfig.anonKey);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setError(null);
+    setSuccessMessage(null);
 
-    setTimeout(() => {
-      setLoading(false);
-      const user: SystemUser = {
-        id: "usr-" + Math.random().toString(36).substring(2, 9),
-        name: tab === "register" ? name : email.includes("admin") ? "Wilson Paim (Owner)" : "Operador PDV",
-        email: email,
-        role: role,
-        lastLogin: new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }),
-      };
-      onLoginSuccess(user);
-      onClose();
-    }, 600);
-  };
+    if (!email || !password) {
+      setError("Por favor, preencha todos os campos obrigatórios.");
+      return;
+    }
 
-  const handleQuickLogin = (demoRole: "admin" | "cashier") => {
+    if (password.length < 6) {
+      setError("A senha deve conter no mínimo 6 caracteres.");
+      return;
+    }
+
+    if (!hasConfig) {
+      setError("Configure a URL e a Chave Anon do Supabase nas Configurações de Banco para autenticar contas reais.");
+      return;
+    }
+
     setLoading(true);
-    setTimeout(() => {
+
+    try {
+      if (tab === "register") {
+        if (!name.trim()) {
+          setError("Informe seu nome completo para o cadastro.");
+          setLoading(false);
+          return;
+        }
+
+        const res = await supabaseSignUp(dbConfig.endpoint, dbConfig.anonKey!, {
+          email,
+          password,
+          name,
+          role,
+        });
+
+        setSuccessMessage("Conta criada com sucesso no Supabase!");
+        onLoginSuccess(res.user);
+        setTimeout(onClose, 800);
+      } else if (tab === "login") {
+        const res = await supabaseSignIn(dbConfig.endpoint, dbConfig.anonKey!, {
+          email,
+          password,
+        });
+
+        onLoginSuccess(res.user);
+        onClose();
+      } else if (tab === "recovery") {
+        setSuccessMessage("Se o e-mail estiver cadastrado, as instruções foram enviadas.");
+      }
+    } catch (err: any) {
+      setError(err.message || "Falha na autenticação. Verifique os dados digitados.");
+    } finally {
       setLoading(false);
-      const user: SystemUser = {
-        id: demoRole === "admin" ? "usr-admin-01" : "usr-cashier-02",
-        name: demoRole === "admin" ? "Wilson Paim (Owner)" : "Carlos Silva (Caixa 01)",
-        email: demoRole === "admin" ? "admin@wlcsystem.com.br" : "caixa01@wlcsystem.com.br",
-        role: demoRole,
-        lastLogin: new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }),
-      };
-      onLoginSuccess(user);
-      onClose();
-    }, 400);
+    }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
       <div 
-        className="w-full max-w-md bg-[#0f1115] border border-[#232730] rounded-2xl p-6 shadow-2xl relative overflow-hidden"
+        className="w-full max-w-md bg-zinc-950 border border-zinc-800 rounded-2xl p-6 shadow-2xl relative"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Ambient Subtle Glow */}
-        <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-
-        {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-[#232730]">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-amber-500 to-amber-600 flex items-center justify-center font-bold text-black text-sm shadow-md">
-              W
-            </div>
-            <div>
-              <h3 className="font-semibold text-zinc-100 text-sm tracking-tight flex items-center gap-2">
-                Acesso ao Sistema
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#181a20] border border-[#2d313d] text-zinc-400">
-                  v1.1.0
-                </span>
-              </h3>
-              <p className="text-[11px] text-zinc-400">SaaS Hub & PDV Integrado</p>
-            </div>
+        <div className="flex items-center justify-between pb-4 border-b border-zinc-800">
+          <div>
+            <h3 className="font-medium text-zinc-100 text-sm tracking-tight">
+              {tab === "login" && "Acessar Sistema WLC"}
+              {tab === "register" && "Criar Nova Conta Real"}
+              {tab === "recovery" && "Recuperação de Acesso"}
+            </h3>
+            <p className="text-xs text-zinc-400 mt-0.5">
+              Autenticação integrada ao Supabase
+            </p>
           </div>
           <button 
             onClick={onClose}
-            className="text-zinc-500 hover:text-zinc-300 p-1.5 rounded-lg hover:bg-[#181b22] transition-colors"
+            className="text-zinc-500 hover:text-zinc-200 p-1.5 rounded-lg hover:bg-zinc-900 transition-colors"
           >
             ✕
           </button>
         </div>
 
-        {/* Navigation Tabs */}
-        <div className="flex rounded-xl bg-[#14161d] p-1 mt-4 border border-[#232732]">
+        {!hasConfig && (
+          <div className="mt-4 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs flex flex-col gap-1.5">
+            <div className="font-medium">Supabase não configurado</div>
+            <div className="text-[11px] text-amber-200/80">
+              Insira a URL e a Chave Anon nas configurações do banco para autenticar contas reais.
+            </div>
+            {onOpenDbConfig && (
+              <button
+                type="button"
+                onClick={() => {
+                  onClose();
+                  onOpenDbConfig();
+                }}
+                className="self-start text-[11px] font-semibold underline hover:text-amber-100"
+              >
+                Abrir Configurações do Banco →
+              </button>
+            )}
+          </div>
+        )}
+
+        <div className="flex gap-1 p-1 mt-4 rounded-xl bg-zinc-900 border border-zinc-800">
           <button
             type="button"
-            onClick={() => setTab("login")}
-            className={`flex-1 py-1.5 text-xs font-medium rounded-lg transition-all ${
-              tab === "login" 
-                ? "bg-[#232732] text-zinc-100 shadow-sm" 
-                : "text-zinc-400 hover:text-zinc-200"
-            }`}
+            onClick={() => { setTab("login"); setError(null); }}
+            className={"flex-1 py-1.5 text-xs font-medium rounded-lg transition-colors " + (tab === "login" ? "bg-zinc-800 text-zinc-100 shadow-sm" : "text-zinc-400 hover:text-zinc-200")}
           >
             Entrar
           </button>
           <button
             type="button"
-            onClick={() => setTab("register")}
-            className={`flex-1 py-1.5 text-xs font-medium rounded-lg transition-all ${
-              tab === "register" 
-                ? "bg-[#232732] text-zinc-100 shadow-sm" 
-                : "text-zinc-400 hover:text-zinc-200"
-            }`}
+            onClick={() => { setTab("register"); setError(null); }}
+            className={"flex-1 py-1.5 text-xs font-medium rounded-lg transition-colors " + (tab === "register" ? "bg-zinc-800 text-zinc-100 shadow-sm" : "text-zinc-400 hover:text-zinc-200")}
           >
-            Criar Conta
+            Cadastrar
           </button>
           <button
             type="button"
-            onClick={() => setTab("recovery")}
-            className={`flex-1 py-1.5 text-xs font-medium rounded-lg transition-all ${
-              tab === "recovery" 
-                ? "bg-[#232732] text-zinc-100 shadow-sm" 
-                : "text-zinc-400 hover:text-zinc-200"
-            }`}
+            onClick={() => { setTab("recovery"); setError(null); }}
+            className={"flex-1 py-1.5 text-xs font-medium rounded-lg transition-colors " + (tab === "recovery" ? "bg-zinc-800 text-zinc-100 shadow-sm" : "text-zinc-400 hover:text-zinc-200")}
           >
             Recuperar
           </button>
         </div>
 
-        {/* Form Body */}
-        <form onSubmit={handleSubmit} className="mt-5 space-y-3.5">
+        <form onSubmit={handleSubmit} className="mt-4 space-y-3.5">
           {tab === "register" && (
             <div>
               <label className="block text-[11px] font-mono uppercase tracking-wider text-zinc-400 mb-1">
@@ -139,52 +166,41 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               </label>
               <input
                 type="text"
-                required
+                placeholder="Seu Nome"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Ex: Carlos Oliveira"
-                className="w-full bg-[#14161d] border border-[#262a36] rounded-xl px-3.5 py-2.5 text-xs text-zinc-100 focus:outline-none focus:border-amber-500 transition-colors"
+                required
+                className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 focus:outline-none focus:border-zinc-500 transition-colors"
               />
             </div>
           )}
 
           <div>
             <label className="block text-[11px] font-mono uppercase tracking-wider text-zinc-400 mb-1">
-              E-mail Corporativo
+              E-mail
             </label>
             <input
               type="email"
-              required
+              placeholder="seu@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="seu.email@empresa.com"
-              className="w-full bg-[#14161d] border border-[#262a36] rounded-xl px-3.5 py-2.5 text-xs text-zinc-100 focus:outline-none focus:border-amber-500 transition-colors"
+              required
+              className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 focus:outline-none focus:border-zinc-500 transition-colors"
             />
           </div>
 
           {tab !== "recovery" && (
             <div>
-              <div className="flex items-center justify-between mb-1">
-                <label className="block text-[11px] font-mono uppercase tracking-wider text-zinc-400">
-                  Senha
-                </label>
-                {tab === "login" && (
-                  <button
-                    type="button"
-                    onClick={() => setTab("recovery")}
-                    className="text-[11px] text-amber-500/80 hover:text-amber-400 transition-colors"
-                  >
-                    Esqueceu?
-                  </button>
-                )}
-              </div>
+              <label className="block text-[11px] font-mono uppercase tracking-wider text-zinc-400 mb-1">
+                Senha
+              </label>
               <input
                 type="password"
-                required
+                placeholder="Mínimo 6 caracteres"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Sua senha secreta"
-                className="w-full bg-[#14161d] border border-[#262a36] rounded-xl px-3.5 py-2.5 text-xs text-zinc-100 focus:outline-none focus:border-amber-500 transition-colors"
+                required
+                className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 focus:outline-none focus:border-zinc-500 transition-colors"
               />
             </div>
           )}
@@ -192,86 +208,45 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           {tab === "register" && (
             <div>
               <label className="block text-[11px] font-mono uppercase tracking-wider text-zinc-400 mb-1">
-                Função no Sistema
+                Nível de Acesso (Perfil)
               </label>
               <select
                 value={role}
                 onChange={(e) => setRole(e.target.value as any)}
-                className="w-full bg-[#14161d] border border-[#262a36] rounded-xl px-3.5 py-2.5 text-xs text-zinc-100 focus:outline-none focus:border-amber-500 transition-colors"
+                className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 focus:outline-none focus:border-zinc-500 transition-colors"
               >
-                <option value="admin">Administrador (Acesso Total + Banco de Dados)</option>
-                <option value="manager">Gerente SaaS (Métricas e Assinaturas)</option>
-                <option value="cashier">Operador de Caixa (PDV e Vendas)</option>
+                <option value="admin">Administrador (Owner)</option>
+                <option value="manager">Gerente Operacional</option>
+                <option value="cashier">Operador de Caixa (PDV)</option>
               </select>
             </div>
           )}
 
           {error && (
-            <div className="p-2.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs">
+            <div className="p-2.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-300 text-xs">
               {error}
+            </div>
+          )}
+
+          {successMessage && (
+            <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-mono">
+              {successMessage}
             </div>
           )}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold text-xs tracking-wide shadow-lg shadow-amber-500/10 transition-all flex items-center justify-center gap-2"
+            className="w-full mt-2 py-2.5 px-4 rounded-xl bg-zinc-100 hover:bg-white text-zinc-950 font-semibold text-xs tracking-wide transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
           >
-            {loading ? (
-              <span className="inline-block w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
-            ) : tab === "login" ? (
-              "Entrar com Credenciais"
-            ) : tab === "register" ? (
-              "Concluir Cadastro & Conectar"
-            ) : (
-              "Enviar Link de Recuperação"
-            )}
+            {loading && <span className="w-3.5 h-3.5 border-2 border-zinc-900 border-t-transparent rounded-full animate-spin" />}
+            <span>
+              {tab === "login" && "Entrar no Sistema"}
+              {tab === "register" && "Criar Conta Real"}
+              {tab === "recovery" && "Enviar Link de Redefinição"}
+            </span>
           </button>
         </form>
-
-        {/* Quick Demo Access */}
-        <div className="mt-5 pt-4 border-t border-[#232730]">
-          <p className="text-[10px] font-mono uppercase tracking-wider text-zinc-500 text-center mb-2.5">
-            Acesso Rápido de Demonstração
-          </p>
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={() => handleQuickLogin("admin")}
-              className="py-2 px-3 rounded-lg bg-[#151820] border border-[#262b37] hover:border-amber-500/40 text-left transition-colors group"
-            >
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                <span className="text-[11px] font-medium text-zinc-200 group-hover:text-amber-400 transition-colors">
-                  Owner / Admin
-                </span>
-              </div>
-              <span className="text-[10px] text-zinc-400 block mt-0.5">SaaS + PDV + BD</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => handleQuickLogin("cashier")}
-              className="py-2 px-3 rounded-lg bg-[#151820] border border-[#262b37] hover:border-emerald-500/40 text-left transition-colors group"
-            >
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                <span className="text-[11px] font-medium text-zinc-200 group-hover:text-emerald-400 transition-colors">
-                  Operador PDV
-                </span>
-              </div>
-              <span className="text-[10px] text-zinc-400 block mt-0.5">Caixa & Checkout</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Footer Database Sync Indicator */}
-        <div className="mt-4 pt-3 border-t border-[#232730] flex items-center justify-between text-[10px] text-zinc-400">
-          <div className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Banco: <strong className="text-zinc-300">{dbConfig.provider}</strong></span>
-          </div>
-          <span className="font-mono text-zinc-400">{dbConfig.latencyMs}ms · SSL Ativo</span>
-        </div>
       </div>
     </div>
   );

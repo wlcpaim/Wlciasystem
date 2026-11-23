@@ -14,6 +14,7 @@ export type DbStatus = "connected" | "connecting" | "offline" | "syncing";
 export interface DatabaseConfig {
   provider: "Lovable Cloud" | "Supabase" | "PostgreSQL" | "Local SQLite";
   endpoint: string;
+  anonKey?: string;
   databaseName: string;
   ssl: boolean;
   status: DbStatus;
