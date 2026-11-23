@@ -22,7 +22,7 @@ export const Faq: React.FC = () => {
     },
     {
       q: "Existe período de prova de conceito (POC) para grandes empresas?",
-      a: "Sim. Para planos Enterprise oferecemos uma POC assistida de 14 dias com acompanhamento de um engenheiro de soluções para validar o ganho de ROI direto no seu squad.",
+      a: "Sim. Para planos Enterprise oferecemos uma POC assistida de 14 dias com acompanhamento de um engenheiro de soluções para validar o ganho de ROI direto na sua equipe.",
     },
   ];
 

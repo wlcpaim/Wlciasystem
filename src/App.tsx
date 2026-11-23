@@ -22,8 +22,8 @@ import { getStoredConfig, getStoredSession, clearStoredSession, saveStoredConfig
 
 const DEFAULT_DB_CONFIG: DatabaseConfig = {
   provider: "Supabase",
-  endpoint: "https://wnmrtobkvuqtmomizanz.supabase.co",
-  anonKey: "sb_publishable_r1USqpyrj-RymBwrqIQimQ_uoD46GOB",
+  endpoint: typeof window !== "undefined" ? (window as any).__WLC_DB_ENDPOINT__ || "" : "",
+  anonKey: typeof window !== "undefined" ? (window as any).__WLC_ANON_KEY__ || "" : "",
   databaseName: "wlc_system_production",
   ssl: true,
   status: "connected",

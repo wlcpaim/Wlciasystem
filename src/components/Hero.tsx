@@ -25,7 +25,7 @@ export const Hero: React.FC = () => {
             href="#roi-simulador"
             className="w-full sm:w-auto px-8 py-4 rounded-xl text-sm font-semibold uppercase tracking-wider text-zinc-950 bg-white hover:bg-zinc-200 transition-all shadow-lg hover:-translate-y-0.5"
           >
-            Simular Economia do Squad
+            Simular Economia da Equipe
           </a>
           <a
             href="#recursos"

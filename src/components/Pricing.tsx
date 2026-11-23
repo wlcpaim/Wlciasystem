@@ -27,7 +27,7 @@ export const Pricing: React.FC = () => {
       badge: "Mais Recomendado",
       priceMonthly: 399,
       priceAnnual: 319,
-      description: "Para squads em escala que exigem máxima velocidade e integração de bots por bridge.",
+      description: "Para equipes em escala que exigem máxima velocidade e integração de bots por bridge.",
       features: [
         "Projetos ilimitados",
         "Bridge de comandos entre bots (Realtime)",
@@ -67,7 +67,7 @@ export const Pricing: React.FC = () => {
             Invista na Produtividade do seu Time
           </h2>
           <p className="text-base text-zinc-400 mb-8">
-            Escolha o plano ideal para a dimensão do seu squad de tecnologia. Todos incluem o motor WLC System.
+            Escolha o plano ideal para a dimensão da sua equipe de tecnologia. Todos incluem o motor WLC System.
           </p>
 
           <div className="inline-flex items-center p-1 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-semibold">

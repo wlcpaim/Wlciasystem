@@ -71,7 +71,7 @@ export const EnterpriseSegment: React.FC = () => {
             Soluções Feitas sob Medida para o seu Porte
           </h2>
           <p className="text-base text-zinc-400">
-            De squads enxutos a grandes divisões de engenharia, a automação determinística se adapta às regras do seu negócio.
+            De equipes enxutas a grandes divisões de engenharia, a automação determinística se adapta às regras do seu negócio.
           </p>
 
           {/* Segment Selector Tabs */}

@@ -24,7 +24,7 @@ export const RoiChart: React.FC = () => {
             <span>SIMULADOR DE RETORNO EM TEMPO REAL</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
-            Projete o Impacto Financeiro no seu Squad
+            Projete o Impacto Financeiro na sua Equipe
           </h2>
           <p className="text-base text-slate-400">
             Ajuste os parâmetros da sua equipe técnica para calcular a economia de horas e o retorno de capital anual garantido pela automação WLC System.
