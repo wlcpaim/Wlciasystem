@@ -73,13 +73,13 @@ export const Pricing: React.FC = () => {
           <div className="inline-flex items-center p-1 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-semibold">
             <button
               onClick={() => setAnnual(false)}
-              className={}
+              className={"px-4 py-2 rounded-lg transition-all " + (!annual ? "bg-zinc-800 text-white shadow" : "text-zinc-400 hover:text-white")}
             >
               Faturamento Mensal
             </button>
             <button
               onClick={() => setAnnual(true)}
-              className={}
+              className={"px-4 py-2 rounded-lg transition-all flex items-center space-x-1.5 " + (annual ? "bg-white text-zinc-950 shadow-md font-bold" : "text-zinc-400 hover:text-white")}
             >
               <span>Faturamento Anual</span>
               <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-zinc-200 text-zinc-900 font-bold">
@@ -95,7 +95,7 @@ export const Pricing: React.FC = () => {
             return (
               <div
                 key={p.id}
-                className={}
+                className={"p-8 rounded-2xl flex flex-col justify-between relative transition-all " + (p.popular ? "bg-zinc-900 border-2 border-zinc-600 shadow-xl -translate-y-2" : "glass-card-interactive")}
               >
                 {p.popular && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-white text-zinc-950 text-[10px] font-extrabold uppercase tracking-widest shadow-md">
@@ -128,7 +128,7 @@ export const Pricing: React.FC = () => {
                 </div>
 
                 <button
-                  className={}
+                  className={"w-full py-3.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all " + (p.popular ? "bg-white text-zinc-950 hover:bg-zinc-200 shadow-md" : "bg-zinc-800 hover:bg-zinc-700 text-zinc-100 border border-zinc-700")}
                 >
                   {p.cta}
                 </button>

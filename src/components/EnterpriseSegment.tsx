@@ -78,19 +78,19 @@ export const EnterpriseSegment: React.FC = () => {
           <div className="mt-8 inline-flex p-1 rounded-2xl bg-zinc-900 border border-zinc-800 text-xs font-semibold">
             <button
               onClick={() => setActiveTab("startup")}
-              className={}
+              className={"px-5 py-2.5 rounded-xl transition-all " + (activeTab === "startup" ? "bg-white text-zinc-950 shadow-md font-bold" : "text-zinc-400 hover:text-white")}
             >
               Startups & PMEs
             </button>
             <button
               onClick={() => setActiveTab("mid")}
-              className={}
+              className={"px-5 py-2.5 rounded-xl transition-all " + (activeTab === "mid" ? "bg-white text-zinc-950 shadow-md font-bold" : "text-zinc-400 hover:text-white")}
             >
               Médias Empresas
             </button>
             <button
               onClick={() => setActiveTab("enterprise")}
-              className={}
+              className={"px-5 py-2.5 rounded-xl transition-all " + (activeTab === "enterprise" ? "bg-white text-zinc-950 shadow-md font-bold" : "text-zinc-400 hover:text-white")}
             >
               Grandes Corporações
             </button>
