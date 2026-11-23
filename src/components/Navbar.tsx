@@ -17,21 +17,24 @@ export const Navbar: React.FC = () => {
             <div className="flex items-center space-x-2">
               <span className="font-bold text-lg tracking-tight text-white">SaaS Flow</span>
               <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-mono">
-                System 1.1.0
+                Enterprise 1.1.0
               </span>
             </div>
-            <span className="text-xs text-slate-400">Autonomous Engineering Engine</span>
+            <span className="text-xs text-slate-400">Deterministic Software Engine</span>
           </div>
         </div>
 
-        <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+        <nav className="hidden md:flex items-center space-x-7 text-sm font-medium text-slate-300">
           <a href="#hero" className="hover:text-emerald-400 transition-colors">Visão Geral</a>
+          <a href="#segmentos" className="hover:text-emerald-400 transition-colors">Soluções</a>
           <a href="#roi-simulador" className="hover:text-emerald-400 transition-colors flex items-center space-x-1.5">
             <span>Simulador ROI</span>
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
           </a>
-          <a href="#recursos" className="hover:text-emerald-400 transition-colors">Recursos</a>
+          <a href="#recursos" className="hover:text-emerald-400 transition-colors">Arquitetura</a>
+          <a href="#comparativo" className="hover:text-emerald-400 transition-colors">Diferencial</a>
           <a href="#planos" className="hover:text-emerald-400 transition-colors">Planos</a>
+          <a href="#faq" className="hover:text-emerald-400 transition-colors">FAQ</a>
         </nav>
 
         <div className="hidden lg:flex items-center space-x-4">
@@ -65,9 +68,12 @@ export const Navbar: React.FC = () => {
       {mobileMenuOpen && (
         <div className="md:hidden px-4 pt-2 pb-6 bg-slate-950/95 border-b border-slate-800 space-y-3 text-sm">
           <a href="#hero" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-300 hover:text-emerald-400">Visão Geral</a>
+          <a href="#segmentos" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-300 hover:text-emerald-400">Soluções</a>
           <a href="#roi-simulador" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-300 hover:text-emerald-400">Simulador ROI</a>
-          <a href="#recursos" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-300 hover:text-emerald-400">Recursos</a>
+          <a href="#recursos" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-300 hover:text-emerald-400">Arquitetura</a>
+          <a href="#comparativo" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-300 hover:text-emerald-400">Diferencial</a>
           <a href="#planos" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-300 hover:text-emerald-400">Planos</a>
+          <a href="#faq" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-300 hover:text-emerald-400">FAQ</a>
           <a href="#roi-simulador" onClick={() => setMobileMenuOpen(false)} className="block w-full text-center py-2.5 rounded-lg bg-emerald-500 text-slate-950 font-semibold">
             Calcular Retorno
           </a>
