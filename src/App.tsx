@@ -31,11 +31,13 @@ const DEFAULT_DB_CONFIG: DatabaseConfig = {
   autoSync: true,
   lastSync: "Agora",
   tables: [
-    { name: "users", rowCount: 0, sizeKb: 0 },
-    { name: "saas_subscriptions", rowCount: 0, sizeKb: 0 },
+    { name: "users", rowCount: 3420, sizeKb: 142 },
+    { name: "system_events", rowCount: 1890, sizeKb: 384 },
+    { name: "pix_transactions", rowCount: 1240, sizeKb: 216 },
+    { name: "crm_leads", rowCount: 850, sizeKb: 198 },
     { name: "pdv_products", rowCount: 18, sizeKb: 64 },
-    { name: "pdv_sales", rowCount: 0, sizeKb: 0 },
-    { name: "system_events", rowCount: 0, sizeKb: 0 },
+    { name: "pdv_sales", rowCount: 420, sizeKb: 96 },
+    { name: "saas_subscriptions", rowCount: 180, sizeKb: 44 },
   ],
 };
 
@@ -94,7 +96,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-zinc-100 flex flex-col font-sans selection:bg-zinc-800 selection:text-white antialiased">
+    <div className="min-h-screen bg-[#08090d] text-zinc-100 flex flex-col font-sans selection:bg-zinc-800 selection:text-white antialiased">
       {/* Navbar with full Enterprise Module switchers */}
       <Navbar
         activeModule={activeModule}
@@ -158,7 +160,9 @@ export const App: React.FC = () => {
       <DatabaseConfigModal
         isOpen={isDbConfigOpen}
         onClose={() => setIsDbConfigOpen(false)}
+        config={dbConfig}
         currentConfig={dbConfig}
+        onUpdateConfig={handleUpdateConfig}
         onSaveConfig={handleUpdateConfig}
       />
     </div>
