@@ -1,7 +1,3 @@
-`src/components/PdvModule.tsx` · 665 linhas · modified
-```tsx
-`src/components/PdvModule.tsx` · 662 linhas · unchanged
-```tsx
 import React, { useState } from "react";
 import { PdvProduct, CartItem, PdvSale, PaymentMethod, SystemUser } from "../types/system";
 import { ReceiptModal } from "./ReceiptModal";
@@ -664,5 +660,3 @@ export const PdvModule: React.FC<PdvModuleProps> = ({ currentUser, onRequireLogi
     </div>
   );
 };
-```
-```

@@ -1,7 +1,3 @@
-`src/components/SaasDashboard.tsx` · 295 linhas · modified
-```tsx
-`src/components/SaasDashboard.tsx` · 292 linhas · unchanged
-```tsx
 import React, { useState } from "react";
 import { SaasSubscription } from "../types/system";
 
@@ -294,5 +290,3 @@ export const SaasDashboard: React.FC = () => {
     </div>
   );
 };
-```
-```

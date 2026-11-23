@@ -1,5 +1,3 @@
-`src/components/RoiChart.tsx` · 188 linhas · unchanged
-```tsx
 import React, { useState, useMemo } from "react";
 import { DEFAULT_ROI_INPUTS, calculateRoi } from "../utils/roiCalculator";
 import { RoiInputs } from "../types/saas";
@@ -188,4 +186,3 @@ export const RoiChart: React.FC = () => {
     </section>
   );
 };
-```
