@@ -9,53 +9,59 @@
   }
   
   body {
-    background-color: #030712;
-    color: #f1f5f9;
+    background-color: #090a0d;
+    color: #f4f4f5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+  }
+
+  /* Minimalist Grok/Claude Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #090a0d;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #222631;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #313747;
   }
 }
 
-.glass-panel {
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
+@layer utilities {
+  .bg-glass {
+    background: rgba(15, 17, 21, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  
+  .border-glass {
+    border-color: rgba(34, 38, 49, 0.8);
+  }
 
-.glass-card-interactive {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.7) 100%);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
+  /* Subtle Modern Tech Grid */
+  .bg-tech-grid {
+    background-size: 32px 32px;
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  }
 
-.glass-card-interactive:hover {
-  border-color: rgba(16, 185, 129, 0.4);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px -10px rgba(16, 185, 129, 0.15);
-}
+  /* Claude / GPT Warm Gradient text */
+  .text-claude-gradient {
+    background: linear-gradient(135deg, #f4f4f5 0%, #e4e4e7 40%, #d97736 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
-.glass-glow-emerald {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(15, 23, 42, 0.8) 100%);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  box-shadow: 0 0 40px -10px rgba(16, 185, 129, 0.2);
-}
-
-.text-gradient-emerald {
-  background: linear-gradient(135deg, #ffffff 10%, #a7f3d0 60%, #10b981 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-cyan {
-  background: linear-gradient(135deg, #ffffff 15%, #67e8f9 60%, #06b6d4 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.tech-grid {
-  background-size: 48px 48px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  .text-grok-gradient {
+    background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
