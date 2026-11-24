@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import { SystemUser, DatabaseConfig } from "../types/system";
 
-export type AppModule = "landing" | "finance" | "growth" | "automation" | "cognitive" | "saas" | "pdv";
+export type AppModule = 
+  | "landing" 
+  | "admin" 
+  | "finance" 
+  | "growth" 
+  | "automation" 
+  | "cognitive" 
+  | "saas" 
+  | "pdv";
 
 interface NavbarProps {
   activeModule: AppModule;
@@ -26,6 +34,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navItems: { id: AppModule; label: string; badge?: string }[] = [
     { id: "landing", label: "Visão Geral" },
+    { id: "admin", label: "Control Center", badge: "2.0" },
     { id: "finance", label: "Financeiro & PIX", badge: "Live" },
     { id: "growth", label: "Growth CRM" },
     { id: "automation", label: "Automações n8n" },
@@ -51,7 +60,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 WLC<span className="text-zinc-400 font-normal">ENTERPRISE</span>
               </span>
               <span className="hidden sm:inline-block ml-2 text-[10px] font-mono px-1.5 py-0.2 rounded bg-zinc-900 text-zinc-400 border border-zinc-800">
-                1.1.0
+                1.1.0 PRO
               </span>
             </div>
           </div>
@@ -64,7 +73,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onClick={() => onSelectModule(item.id)}
                 className={"py-1.5 px-3 text-xs font-medium rounded-lg transition-all whitespace-nowrap flex items-center gap-1.5 " + (
                   activeModule === item.id 
-                    ? "bg-zinc-800 text-zinc-100 shadow-sm font-semibold" 
+                    ? "bg-zinc-800 text-zinc-100 shadow-sm font-semibold border border-zinc-700/80" 
                     : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/50"
                 )}
               >
@@ -72,7 +81,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 {item.badge && (
                   <span className={"text-[9px] font-mono px-1 py-0.2 rounded " + (
                     activeModule === item.id 
-                      ? "bg-zinc-900 text-zinc-200" 
+                      ? "bg-zinc-950 text-zinc-200" 
                       : "bg-zinc-800/80 text-zinc-400"
                   )}>
                     {item.badge}
@@ -84,18 +93,32 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Right Action Bar */}
           <div className="hidden sm:flex items-center gap-2.5">
+            {/* Quick Control Center Button */}
+            <button
+              onClick={() => onSelectModule("admin")}
+              className={"py-1.5 px-3 rounded-xl border flex items-center gap-2 text-xs font-medium transition-all shadow-sm " + (
+                activeModule === "admin"
+                  ? "bg-zinc-800 border-zinc-600 text-zinc-100"
+                  : "bg-zinc-900 hover:bg-zinc-800/90 border-zinc-800 text-zinc-300"
+              )}
+              title="Abrir WLC Control Center / Admin 2.0"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Control Center</span>
+              <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-zinc-950 text-zinc-400 border border-zinc-800">
+                2.0
+              </span>
+            </button>
+
             {/* Database & Admin Panel Pill */}
             <button
               onClick={onOpenDbConfig}
-              className="py-1.5 px-3 rounded-xl bg-zinc-900/90 hover:bg-zinc-800/90 border border-zinc-800/90 flex items-center gap-2 text-xs text-zinc-300 transition-all group hover:border-zinc-700 shadow-sm"
-              title="Abrir Painel Admin & Banco de Dados"
+              className="py-1.5 px-2.5 rounded-xl bg-zinc-900/90 hover:bg-zinc-800/90 border border-zinc-800/90 flex items-center gap-2 text-xs text-zinc-300 transition-all group hover:border-zinc-700 shadow-sm"
+              title="Conexão PostgreSQL / Hyperdrive"
             >
-              <span className={"w-1.5 h-1.5 rounded-full " + (dbConfig.status === "connected" ? "bg-white animate-pulse" : "bg-zinc-600")} />
-              <span className="font-mono text-zinc-400 text-[11px]">DB:</span>
-              <span className="font-medium text-zinc-200 text-xs tracking-tight">
-                Painel Admin
-              </span>
-              <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-zinc-950 text-zinc-400 border border-zinc-800">
+              <span className={"w-1.5 h-1.5 rounded-full " + (dbConfig.status === "connected" ? "bg-white" : "bg-zinc-600")} />
+              <span className="font-mono text-zinc-400 text-[11px]">DB</span>
+              <span className="text-[10px] font-mono px-1 py-0.2 rounded bg-zinc-950 text-zinc-400 border border-zinc-800">
                 {dbConfig.latencyMs}ms
               </span>
             </button>
@@ -135,11 +158,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Mobile Actions */}
           <div className="flex items-center gap-2 lg:hidden">
             <button
-              onClick={onOpenDbConfig}
+              onClick={() => onSelectModule("admin")}
               className="py-1.5 px-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-200 text-xs font-mono flex items-center gap-1.5"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-white" />
-              <span>Admin DB</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              <span>Admin 2.0</span>
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

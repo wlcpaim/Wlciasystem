@@ -15,6 +15,7 @@ import { FinanceModule } from "./components/FinanceModule";
 import { CrmGrowthModule } from "./components/CrmGrowthModule";
 import { AutomationModule } from "./components/AutomationModule";
 import { CognitiveModule } from "./components/CognitiveModule";
+import { AdminControlCenter } from "./components/admin/AdminControlCenter";
 import { AuthModal } from "./components/AuthModal";
 import { DatabaseConfigModal } from "./components/DatabaseConfigModal";
 import { SystemUser, DatabaseConfig } from "./types/system";
@@ -33,11 +34,12 @@ const DEFAULT_DB_CONFIG: DatabaseConfig = {
   tables: [
     { name: "users", rowCount: 3420, sizeKb: 142 },
     { name: "system_events", rowCount: 1890, sizeKb: 384 },
+    { name: "user_sessions", rowCount: 3892, sizeKb: 512 },
+    { name: "audit_logs", rowCount: 48120, sizeKb: 2048 },
+    { name: "organizations", rowCount: 124, sizeKb: 64 },
     { name: "pix_transactions", rowCount: 1240, sizeKb: 216 },
     { name: "crm_leads", rowCount: 850, sizeKb: 198 },
-    { name: "pdv_products", rowCount: 18, sizeKb: 64 },
     { name: "pdv_sales", rowCount: 420, sizeKb: 96 },
-    { name: "saas_subscriptions", rowCount: 180, sizeKb: 44 },
   ],
 };
 
@@ -88,16 +90,27 @@ export const App: React.FC = () => {
   const handleModuleSelect = (mod: AppModule) => {
     // If selecting protected modules without login, prompt auth
     const isProtected = mod !== "landing";
-    if (isProtected && !currentUser) {
+    if (isProtected && !currentUser && mod !== "admin") {
       setIsAuthOpen(true);
       return;
     }
     setActiveModule(mod);
   };
 
+  // Se o módulo ativo for o WLC Control Center (Admin 2.0), renderiza o layout administrativo próprio e independente
+  if (activeModule === "admin") {
+    return (
+      <AdminControlCenter
+        currentUser={currentUser}
+        onExitAdmin={() => setActiveModule("landing")}
+        onLogout={handleLogout}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#08090d] text-zinc-100 flex flex-col font-sans selection:bg-zinc-800 selection:text-white antialiased">
-      {/* Navbar with full Enterprise Module switchers */}
+      {/* Navbar com WLC Control Center e seletores empresariais */}
       <Navbar
         activeModule={activeModule}
         onSelectModule={handleModuleSelect}
